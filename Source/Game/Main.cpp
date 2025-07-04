@@ -1,9 +1,9 @@
 //#include "../Engine/Math/Math.h"
-//#include "../Engine/Core/Random.h"
+#include "../Engine/Core/Random.h"
 //#include <iostream>
 //
-//using namespace std;
-//using namespace viper;
+using namespace std;
+using namespace viper;
 //
 //#define NAME "Raymond\n"
 //int main() {
@@ -25,7 +25,9 @@
 int main(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);
 
-    SDL_Window* window = SDL_CreateWindow("SDL3 Project", 1280, 1024, 0);
+    int height = 1280;
+    int width = 1024;
+    SDL_Window* window = SDL_CreateWindow("SDL3 Project", height, width, 0);
     if (window == nullptr) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -58,6 +60,23 @@ int main(int argc, char* argv[]) {
 
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set render draw color to green
         SDL_RenderFillRect(renderer, &greenSquare); // Render the rectangle
+
+        //Random Lines
+        for (int i = 0; i < 10; i++) {
+            // Set color            
+            SDL_SetRenderDrawColor(renderer, random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255);
+
+            // Draw line
+            SDL_RenderLine(renderer, random::getRandomInt(height), random::getRandomInt(width), random::getRandomInt(height), random::getRandomInt(width));
+        }
+
+        for (int i = 0; i < 20; i++) {
+            // Set color
+            SDL_SetRenderDrawColor(renderer, random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255);
+            
+            // Draw point
+            SDL_RenderPoint(renderer, random::getRandomInt(height), random::getRandomInt(width));
+        }
 
         SDL_RenderPresent(renderer); // Render the screen
     }

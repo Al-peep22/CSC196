@@ -5,8 +5,8 @@ namespace viper {
 		int getRandomInt() { return rand(); }
 
 		//<summary>
-		//Generates a random integer in the range [0,max)
-		int getRandomInt(int max) { return rand() % max; }
+		//Generates a random integer in the range [0,max]
+		int getRandomInt(int max) { return rand() % max + 1; }
 
 		//<summary>
 		//Generates a random integer in the range [min,max]
