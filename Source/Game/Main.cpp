@@ -1,4 +1,5 @@
-//#include "../Engine/Math/Math.h"
+#include "../Engine/Math/Math.h"
+#include "../Engine/Math/Vector2.h"
 #include "../Engine/Core/Random.h"
 //#include <iostream>
 //
@@ -20,14 +21,20 @@ using namespace viper;
 //}
 
 #include <SDL3/SDL.h>
-#include <iostream>
+#include "../Engine/Renderer/Renderer.h"
 
 int main(int argc, char* argv[]) {
-    SDL_Init(SDL_INIT_VIDEO);
+    Renderer renderer;
 
-    int height = 1280;
-    int width = 1024;
-    SDL_Window* window = SDL_CreateWindow("SDL3 Project", height, width, 0);
+    int width = 1280;
+    int height = 1024;
+
+    renderer.Initialize();
+    renderer.CreateWindow("Screen",width, height);
+
+    /*SDL_Init(SDL_INIT_VIDEO);
+
+    SDL_Window* window = SDL_CreateWindow("SDL3 Project", width, height, 0);
     if (window == nullptr) {
         std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
@@ -40,10 +47,12 @@ int main(int argc, char* argv[]) {
         SDL_DestroyWindow(window);
         SDL_Quit();
         return 1;
-    }
+    }*/
 
     SDL_Event e;
     bool quit = false;
+
+    vec2 v(30, 40);
 
     // Define a rectangle
     SDL_FRect greenSquare{ 270, 190, 200, 200 };
@@ -55,35 +64,48 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set render draw color to black
-        SDL_RenderClear(renderer); // Clear the renderer
+        renderer.SetColor(0,0,0);
+        renderer.Clear();
 
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set render draw color to green
-        SDL_RenderFillRect(renderer, &greenSquare); // Render the rectangle
+        renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
+        renderer.DrawLine(random::getRandomInt(width), random::getRandomInt(height), random::getRandomInt(width), random::getRandomInt(height));
 
-        //Random Lines
-        for (int i = 0; i < 10; i++) {
-            // Set color            
-            SDL_SetRenderDrawColor(renderer, random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255);
+        renderer.Present();
 
-            // Draw line
-            SDL_RenderLine(renderer, random::getRandomInt(height), random::getRandomInt(width), random::getRandomInt(height), random::getRandomInt(width));
-        }
 
-        for (int i = 0; i < 20; i++) {
-            // Set color
-            SDL_SetRenderDrawColor(renderer, random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255);
-            
-            // Draw point
-            SDL_RenderPoint(renderer, random::getRandomInt(height), random::getRandomInt(width));
-        }
 
-        SDL_RenderPresent(renderer); // Render the screen
+        //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // Set render draw color to black
+        //SDL_RenderClear(renderer); // Clear the renderer
+
+        //SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set render draw color to green
+        //SDL_RenderFillRect(renderer, &greenSquare); // Render the rectangle
+
+        ////Random Lines
+        //for (int i = 0; i < 10; i++) {
+        //    // Set color            
+        //    SDL_SetRenderDrawColor(renderer, random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255);
+
+        //    // Draw line
+        //    SDL_RenderLine(renderer, random::getRandomInt(width), random::getRandomInt(height), random::getRandomInt(width), random::getRandomInt(height));
+        //}
+
+        ////Random Points
+        //for (int i = 0; i < 20; i++) {
+        //    // Set color
+        //    SDL_SetRenderDrawColor(renderer, random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256), 255);
+        //    
+        //    // Draw point
+        //    SDL_RenderPoint(renderer, random::getRandomInt(width), random::getRandomInt(height));
+        //}
+
+        //SDL_RenderPresent(renderer); // Render the screen
     }
 
-    SDL_DestroyRenderer(renderer);
+    /*SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    SDL_Quit();
+    SDL_Quit();*/
+
+    renderer.ShutDown();
 
     return 0;
 }
