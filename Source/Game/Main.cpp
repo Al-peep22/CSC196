@@ -1,6 +1,7 @@
 #include "../Engine/Math/Math.h"
 #include "../Engine/Math/Vector2.h"
 #include "../Engine/Core/Random.h"
+#include "../Engine/Core/Time.h"
 //#include <iostream>
 //
 using namespace std;
@@ -19,11 +20,13 @@ using namespace viper;
 //		cout << random::getRandomFloat() << endl;
 //	}
 //}
-
+#include <vector>
+#include <iostream>
 #include <SDL3/SDL.h>
 #include "../Engine/Renderer/Renderer.h"
 
 int main(int argc, char* argv[]) {
+    Time time;
     Renderer renderer;
 
     int width = 1280;
@@ -52,12 +55,19 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
-    vec2 v(30, 40);
+    //create stars
+    vector<vec2> stars;
+    for (int i = 0; i < 100; i++) {
+        stars.push_back(vec2{ random::getRandomFloat() * 1280, random::getRandomFloat() * 1024 });
+    }
+    //vec2 v(30, 40);
 
     // Define a rectangle
-    SDL_FRect greenSquare{ 270, 190, 200, 200 };
+    //SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
+    //MAIN LOOP
     while (!quit) {
+        time.Tick();
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
@@ -67,9 +77,27 @@ int main(int argc, char* argv[]) {
         renderer.SetColor(0,0,0);
         renderer.Clear();
 
-        renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
-        renderer.DrawLine(random::getRandomInt(width), random::getRandomInt(height), random::getRandomInt(width), random::getRandomInt(height));
+        vec2 speed{ -140.0f,0.0f };
+        float length = speed.Length();
 
+        for (auto& star : stars) {
+            star += speed * time.GetDeltaTime();
+            //star = star.Add(speed);
+
+            if (star[0] > width) star[0] = 0;
+            if (star[0] < 0) star[0] = width;
+            renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
+            renderer.DrawPoint(star.x, star.y);
+        }
+
+        //for (int i = 0; i < 100; i++) {
+            /*renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
+            renderer.DrawLine(random::getRandomInt(width), random::getRandomInt(height), random::getRandomInt(width), random::getRandomInt(height));
+
+            renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
+            renderer.DrawPoint(v.x,v.y);
+            renderer.DrawPoint(random::getRandomFloat() * width, random::getRandomFloat()* height);*/
+        //}
         renderer.Present();
 
 
