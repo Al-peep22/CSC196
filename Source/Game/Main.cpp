@@ -85,6 +85,11 @@ int main(int argc, char* argv[]) {
             cout << "Pressed \n";
         }
 
+        if (input.GetMouseButtonDown(0)) {
+            cout << "mouse pressed \n";
+        }
+
+
         vec2 mouse = input.GetMousePosition();
         cout << mouse.x << " " << mouse.y << endl;
 

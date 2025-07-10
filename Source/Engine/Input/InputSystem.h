@@ -9,6 +9,16 @@ namespace viper {
 	class InputSystem {
 	public:
 		InputSystem() = default;
+		enum class MouseButton {
+			Left,
+			Middle,
+			Right
+		};
+		
+		/*enum class Direction {
+			Left,
+			Right
+		};*/
 
 		bool Initialize();
 		void ShutDown();
@@ -27,18 +37,10 @@ namespace viper {
 		//MOUSE INPUT
 		bool GetMouseButtonDown(uint8_t button) { assert(button < 3); return this->mouseButtonState[button]; }
 		bool GetPrevMouseButtonDown(uint8_t button) { assert(button < 3); return this->prevMouseButtonState[button]; }
+		bool GetMouseButtonPressed(uint8_t button) { assert(button < 3); return !this->prevMouseButtonState[button] && this->mouseButtonState[button];}
+		bool GetMouseButtonReleased(uint8_t button) { assert(button < 3); return this->prevMouseButtonState[button] && !this->mouseButtonState[button];}
 
 
-		enum class MouseButton {
-			Left,
-			Middle,
-			Right
-		};
-		
-		/*enum class Direction {
-			Left,
-			Right
-		};*/
 		
 
 	public:
