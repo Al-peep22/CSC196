@@ -25,6 +25,7 @@ using namespace viper;
 #include <iostream>
 #include <SDL3/SDL.h>
 #include "../Engine/Renderer/Renderer.h"
+#include "../Engine/Input/InputSystem.h"
 
 int main(int argc, char* argv[]) {
     Time time;
@@ -35,6 +36,10 @@ int main(int argc, char* argv[]) {
 
     renderer.Initialize();
     renderer.CreateWindow("Screen",width, height);
+
+    InputSystem input;
+    input.Initialize();
+
 
     /*SDL_Init(SDL_INIT_VIDEO);
 
@@ -74,6 +79,14 @@ int main(int argc, char* argv[]) {
                 quit = true;
             }
         }
+
+        input.Update();
+        if (input.GetKeyPressed(SDL_SCANCODE_A)) {
+            cout << "Pressed \n";
+        }
+
+        vec2 mouse = input.GetMousePosition();
+        cout << mouse.x << " " << mouse.y << endl;
 
         renderer.SetColor(0,0,0);
         renderer.Clear();
