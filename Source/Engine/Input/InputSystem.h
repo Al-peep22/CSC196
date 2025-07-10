@@ -24,6 +24,11 @@ namespace viper {
 		const vec2& GetMousePosition() const  { return this->mousePosition; }
 		const vec2& GetPrevMousePosition() const  { return this->prevMousePosition; }
 
+		//MOUSE INPUT
+		bool GetMouseButtonDown(uint8_t button) { assert(button < 3); return this->mouseButtonState[button]; }
+		bool GetPrevMouseButtonDown(uint8_t button) { assert(button < 3); return this->prevMouseButtonState[button]; }
+
+
 		enum class MouseButton {
 			Left,
 			Middle,
