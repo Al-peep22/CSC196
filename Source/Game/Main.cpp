@@ -4,9 +4,10 @@
 #include "../Engine/Core/Time.h"
 //#include <iostream>
 //
+
 using namespace std;
 using namespace viper;
-//
+
 //#define NAME "Raymond\n"
 //int main() {
 //	//float deg = viper::radToDeg(viper::pi);
@@ -90,14 +91,14 @@ int main(int argc, char* argv[]) {
             renderer.DrawPoint(star.x, star.y);
         }
 
-        //for (int i = 0; i < 100; i++) {
-            /*renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
+        /*for (int i = 0; i < 100; i++) {
+            renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
             renderer.DrawLine(random::getRandomInt(width), random::getRandomInt(height), random::getRandomInt(width), random::getRandomInt(height));
 
             renderer.SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
             renderer.DrawPoint(v.x,v.y);
-            renderer.DrawPoint(random::getRandomFloat() * width, random::getRandomFloat()* height);*/
-        //}
+            renderer.DrawPoint(random::getRandomFloat() * width, random::getRandomFloat()* height);
+        }*/
         renderer.Present();
 
 
