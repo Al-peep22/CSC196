@@ -35,8 +35,8 @@ namespace viper {
 		this->prevMouseButtonState = this->mouseButtonState;
 		uint32_t mouseButtonState = SDL_GetMouseState(&this->mousePosition.x,&this->mousePosition.y);
 		
-		this->mouseButtonState[0] = mouseButtonState & SDL_BUTTON_LMASK;
-		this->mouseButtonState[1] = mouseButtonState & SDL_BUTTON_MMASK;
-		this->mouseButtonState[2] = mouseButtonState & SDL_BUTTON_RMASK;
+        this->mouseButtonState[static_cast<size_t>(MouseButton::Left)] = mouseButtonState & SDL_BUTTON_LMASK;  
+        this->mouseButtonState[static_cast<size_t>(MouseButton::Middle)] = mouseButtonState & SDL_BUTTON_MMASK;  
+        this->mouseButtonState[static_cast<size_t>(MouseButton::Right)] = mouseButtonState & SDL_BUTTON_RMASK;
 	}
 }

@@ -15,10 +15,12 @@ namespace viper {
 			Right
 		};
 		
-		/*enum class Direction {
+		enum class Direction {
 			Left,
 			Right
-		};*/
+		};
+
+		//int i = MouseButton::Right;
 
 		bool Initialize();
 		void ShutDown();
@@ -28,20 +30,17 @@ namespace viper {
 		//KEYBOARD INPUT
 		bool getKeyDown(uint8_t key) const { return this->keyboardState[key]; }
 		bool getPrevKeyDown(uint8_t key) const { return this->prevKeyboardState[key]; }
-		bool GetKeyPressed(uint8_t key) const  { return !this->prevKeyboardState[key] && this->keyboardState[key]; }
+		bool GetKeyPressed(uint8_t key) const { return !this->prevKeyboardState[key] && this->keyboardState[key]; }
 		bool GetKeyReleased(uint8_t key) const { return this->prevKeyboardState[key] && !this->keyboardState[key]; }
 
-		const vec2& GetMousePosition() const  { return this->mousePosition; }
-		const vec2& GetPrevMousePosition() const  { return this->prevMousePosition; }
+		const vec2& GetMousePosition() const { return this->mousePosition; }
+		const vec2& GetPrevMousePosition() const { return this->prevMousePosition; }
 
 		//MOUSE INPUT
-		bool GetMouseButtonDown(uint8_t button) { assert(button < 3); return this->mouseButtonState[button]; }
-		bool GetPrevMouseButtonDown(uint8_t button) { assert(button < 3); return this->prevMouseButtonState[button]; }
-		bool GetMouseButtonPressed(uint8_t button) { assert(button < 3); return !this->prevMouseButtonState[button] && this->mouseButtonState[button];}
-		bool GetMouseButtonReleased(uint8_t button) { assert(button < 3); return this->prevMouseButtonState[button] && !this->mouseButtonState[button];}
-
-
-		
+		bool GetMouseButtonDown(MouseButton button) { return this->mouseButtonState[static_cast<size_t>(button)]; }
+		bool GetPrevMouseButtonDown(MouseButton button) { return this->prevMouseButtonState[static_cast<size_t>(button)]; }
+		bool GetMouseButtonPressed(MouseButton button) {  return !this->prevMouseButtonState[static_cast<size_t>(button)] && this->mouseButtonState[static_cast<size_t>(button)]; }
+		bool GetMouseButtonReleased(MouseButton button) {  return this->prevMouseButtonState[static_cast<size_t>(button)] && !this->mouseButtonState[static_cast<size_t>(button)];}		
 
 	public:
 
