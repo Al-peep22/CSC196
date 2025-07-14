@@ -27,6 +27,7 @@ using namespace viper;
 #include "../Engine/Renderer/Renderer.h"
 #include "../Engine/Input/InputSystem.h"
 #include <ranges>
+#include <fmod.hpp>
 
 int main(int argc, char* argv[]) {
     Time time;
@@ -62,6 +63,18 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
+    // create audio system
+    FMOD::System* audio;
+    FMOD::System_Create(&audio);
+
+    void* extradriverdata = nullptr;
+    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
+
+    FMOD::Sound* sound = nullptr;
+    audio->createSound("test.wav", FMOD_DEFAULT, 0, &sound);
+
+    audio->playSound(sound, 0, false, nullptr);
+
     //create stars
     vector<vec2> stars;
     for (int i = 0; i < 100; i++) {
@@ -80,6 +93,30 @@ int main(int argc, char* argv[]) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
             }
+        }
+
+        audio->update();
+
+        std::vector<FMOD::Sound*> sounds;
+        audio->createSound("bass.wav", FMOD_DEFAULT, 0, &sound);
+        sounds.push_back(sound);
+
+        audio->createSound("snare.wav", FMOD_DEFAULT, 0, &sound);
+        sounds.push_back(sound);
+
+        if (input.getKeyDown(SDL_SCANCODE_Q) && !input.getPrevKeyDown(SDL_SCANCODE_Q))
+        {
+            // play bass sound, vector elements can be accessed like an array with [#]
+        }
+
+        if (input.getKeyDown(SDL_SCANCODE_W) && !input.getPrevKeyDown(SDL_SCANCODE_W))
+        {
+            // play snare sound, vector elements can be accessed like an array with [#]
+        }
+
+        if (input.getKeyDown(SDL_SCANCODE_E) && !input.getPrevKeyDown(SDL_SCANCODE_E))
+        {
+            // play hi-hat sound, vector elements can be accessed like an array with [#]
         }
 
         input.Update();
