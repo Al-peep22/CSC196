@@ -4,9 +4,9 @@
 
 namespace viper {
 	namespace math {
-		const float pi = 3.14;
-		const float twoPi = 2 * pi;
-		const float halfPi = pi / 2;
+		const float pi = 3.14f;
+		const float twoPi = 2.0f * pi;
+		const float halfPi = pi / 2.0f;
 
 		/// <summary>
 		/// Converts an angle from randians to degrees;
@@ -32,7 +32,7 @@ namespace viper {
 
 		//inline float wrap(float value, float min, float max) {
 		//	float range = max - min; // calculate range of map
-		//	float result = (value - min) % range; // shift value so range starts at 0
+		//	float result = std::fmod(value - min) % range; // shift value so range starts at 0
 		//	if (result < 0) result += range; // wrap forward if result is negative (value)
 		//	return min + result; // shift the result back to [min, max) range
 		//}
@@ -56,5 +56,8 @@ namespace viper {
 			if (a < b) { return a; }
 			else { return b; }
 		}*/
+
+		using std::atan2;
+		using std::atan2f;
 	}
 }

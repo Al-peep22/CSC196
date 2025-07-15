@@ -2,7 +2,7 @@
 #include "Math.h"
 #include <cassert>
 
-namespace viper{
+namespace viper {
 	template<typename T>
 	struct Vector2 {
 		T x, y;
@@ -14,19 +14,19 @@ namespace viper{
 		T operator [] (unsigned int index) const { assert(index < 2);return (&x)[index]; }
 		T& operator [] (unsigned int index) { assert(index < 2);return (&x)[index]; }
 
-		Vector2 operator + (const Vector2& v) const { return Vector2{x+v.x,y+v.y}; }
-		Vector2 operator - (const Vector2& v) const { return Vector2{x-v.x,y-v.y}; }
-		Vector2 operator * (const Vector2& v) const { return Vector2{x*v.x,y*v.y}; }
-		Vector2 operator / (const Vector2& v) const { return Vector2{x/v.x,y/v.y}; }
+		Vector2 operator + (const Vector2& v) const { return Vector2{ x + v.x,y + v.y }; }
+		Vector2 operator - (const Vector2& v) const { return Vector2{ x - v.x,y - v.y }; }
+		Vector2 operator * (const Vector2& v) const { return Vector2{ x * v.x,y * v.y }; }
+		Vector2 operator / (const Vector2& v) const { return Vector2{ x / v.x,y / v.y }; }
 
 		Vector2 operator + (float s) const { return Vector2{ x + s,y + s }; }
 		Vector2 operator - (float s) const { return Vector2{ x - s,y - s }; }
 		Vector2 operator * (float s) const { return Vector2{ x * s,y * s }; }
 		Vector2 operator / (float s) const { return Vector2{ x / s,y / s }; }
-		
+
 		Vector2& operator += (float s) const { x + s;y + s;return *this; }
 		Vector2& operator -= (float s) const { x - s;y - s;return *this; }
-		Vector2& operator *= (float s) const { x * s;y * s;return *this; }
+		Vector2& operator *= (float s) const { x* s;y* s;return *this; }
 		Vector2& operator /= (float s) const { x / s;y / s;return *this; }
 
 		Vector2& operator += (const Vector2& v) { x += v.x; y += v.y; return *this; }
@@ -37,6 +37,27 @@ namespace viper{
 		//square root (x * x + y * y)
 		float Lengthsqr() const { return ((x * x) + (y * y)); }
 		float Length() const { return math::sqrtf(Lengthsqr()); }
+
+		/// <summary>
+		/// returns a normalized (unit length)
+		/// </summary>
+		/// <returns></returns>
+		Vector2 Normalized() const { return *this / Length(); }
+
+		/// <summary>
+		///  Calculates the angle of the vector in radians.
+		/// </summary>
+		/// <returns></returns>
+		float Angle() const { return math::atan2f(y, x); };
+
+		Vector2 Rotate(float radians) const {
+			Vector2 v;
+
+			v.x = x * math::cosf(radians) - y * math::sinf(radians);
+			v.y = x * math::sinf(radians) + y * math::cosf(radians);
+
+			return v;
+		}
 	};
 
 	using ivec2 = Vector2<int>;

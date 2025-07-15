@@ -6,8 +6,9 @@
 #include <iostream>
 #include <SDL3/SDL.h>
 #include "../Engine/Renderer/Renderer.h"
+#include "../Engine/Renderer/Model.h"
 #include "../Engine/Input/InputSystem.h"
-#include <ranges>
+//#include <ranges>
 #include <fmod.hpp>  
 #include "../Engine/Audio/AudioSystem.h"
 
@@ -76,6 +77,10 @@ int main(int argc, char* argv[]) {
     viper::AudioSystem audio;
     audio.Initialize();
 
+    std::vector<viper::vec2> exp_points{ viper::vec2{-5,-5}, viper::vec2{5,-5}, viper::vec2{5,5}, viper::vec2{-5,5} };
+
+    viper::Model model{ exp_points, viper::vec3{ 0, 0, 1} };
+
     /*FMOD::System* audio;
     FMOD::System_Create(&audio);
 
@@ -135,8 +140,10 @@ int main(int argc, char* argv[]) {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
-            }
+            }          
         }
+
+        if (input.GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         // update engine systems
         audio.Update();
@@ -198,6 +205,9 @@ int main(int argc, char* argv[]) {
 
         renderer.SetColor(0,0,0);
         renderer.Clear();
+
+        //model.Draw(renderer,input.GetMousePosition(),viper::math::halfPi * 0.5f,10.0f);
+        model.Draw(renderer,input.GetMousePosition(),time.GetTime(), 10.0f);
 
 
         if (input.GetMouseButtonDown(viper::InputSystem::MouseButton::Left)) {
