@@ -77,13 +77,28 @@ int main(int argc, char* argv[]) {
     viper::AudioSystem audio;
     audio.Initialize();
 
-    std::vector<viper::vec2> exp_points{ 
+    std::vector<viper::vec2> sqr_points{ 
         viper::vec2{-5,-5}, 
         viper::vec2{5,-5}, 
         viper::vec2{5,5}, 
-        viper::vec2{-5,5} };
+        viper::vec2{-5,5},
+        viper::vec2{-5,-5}
+    };
+    viper::Model model{ sqr_points, viper::vec3{ 255, 255, 255} };
 
-    viper::Model model{ exp_points, viper::vec3{ 0, 0, 1} };
+    std::vector<viper::vec2> boat_points{
+        viper::vec2{0,2},
+        viper::vec2{0,5},
+        viper::vec2{-3,2},
+        viper::vec2{0,2},
+        viper::vec2{0,1},
+        viper::vec2{-3,1},
+        viper::vec2{-2,-1},
+        viper::vec2{2,-1},
+        viper::vec2{3,1},
+        viper::vec2{0,1}
+    };
+    viper::Model boat_Model{ boat_points, viper::vec3{ 255, 255, 255} };
 
     /*FMOD::System* audio;
     FMOD::System_Create(&audio);
@@ -211,7 +226,9 @@ int main(int argc, char* argv[]) {
         renderer.Clear();
 
         //model.Draw(renderer,input.GetMousePosition(),viper::math::halfPi * 0.5f,10.0f);
-        model.Draw(renderer,input.GetMousePosition(),time.GetTime(), 10.0f);
+
+        //model.Draw(renderer,input.GetMousePosition(),time.GetTime(), 10.0f);
+        boat_Model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
 
 
         if (input.GetMouseButtonDown(viper::InputSystem::MouseButton::Left)) {
