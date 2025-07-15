@@ -7,27 +7,28 @@ namespace viper {
 
     bool AudioSystem::CheckFMODResult(FMOD_RESULT result)
     {
-        return false;
+        if (result != FMOD_OK) {
+            std::cerr << FMOD_ErrorString(result) << std::endl;
+            return false;
+        }
+        return true;
     }
 
     bool viper::AudioSystem::Initialize()
     {
         FMOD_RESULT result = FMOD::System_Create(&system);
-        if (result != FMOD_OK) {
-            std::cerr << FMOD_ErrorString(result) << std::endl;
-            return true;
-        }
+        if (!CheckFMODResult(result)) { return false; }
 
         void* extradriverdat = nullptr;
         result = system->init(32, FMOD_INIT_NORMAL, extradriverdat);
-        if (result != FMOD_OK) {
-            std::cerr << FMOD_ErrorString(result) << std::endl;
-        }
+        if (!CheckFMODResult(result)) { return false; }
 
+        return true;
     }
 
     void viper::AudioSystem::ShutDown()
     {
+        //FMOD_RESULT result = system->release();
         CheckFMODResult(system->release());
     }
 

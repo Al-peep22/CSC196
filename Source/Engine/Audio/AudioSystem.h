@@ -11,7 +11,6 @@ namespace viper {
 		void ShutDown();
 
 		void Update();
-
 		bool AddSound(std::string& filename, const std::string& name);
 		bool PlaySound(const std::string& name);
 	private:

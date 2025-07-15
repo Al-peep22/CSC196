@@ -8,7 +8,19 @@
 #include "../Engine/Renderer/Renderer.h"
 #include "../Engine/Input/InputSystem.h"
 #include <ranges>
-#include <fmod.hpp>
+#include <fmod.hpp>  
+#include "../Engine/Audio/AudioSystem.h"
+
+//#include "Audio/AudioSystem.h"
+
+// Ensure the file "../Engine/Audio/AudioSystem.h" exists in the specified path relative to the current file.  
+// If the file is missing, create it with the necessary content or verify the path is correct.  
+
+// Example content for "../Engine/Audio/AudioSystem.h" if missing:  
+// ResponseType: Code  
+// File: Source/Engine/Audio/AudioSystem.h  
+// Content:  
+//
 //#include "../Engine/Audio/AudioSystem.h"
 //#define NAME "Raymond\n"
 //int main() {
@@ -60,13 +72,15 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
-
     // create audio system
-    FMOD::System* audio;
+    viper::AudioSystem audio;
+    audio.Initialize();
+
+    /*FMOD::System* audio;
     FMOD::System_Create(&audio);
 
     void* extradriverdata = nullptr;
-    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);
+    audio->init(32, FMOD_INIT_NORMAL, extradriverdata);*/
 
     FMOD::Sound* sound = nullptr;
     audio->createSound("test.wav", FMOD_DEFAULT, 0, &sound);
@@ -93,7 +107,10 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        audio->update();
+        // update engine systems
+        audio.Update();
+
+        //audio->update();
 
         std::vector<FMOD::Sound*> sounds;
         audio->createSound("bass.wav", FMOD_DEFAULT, 0, &sound);
@@ -235,7 +252,7 @@ int main(int argc, char* argv[]) {
     SDL_Quit();*/
 
     renderer.ShutDown();
-    //audio.Shutdown();
+    audio.ShutDown();
 
     return 0;
 }
