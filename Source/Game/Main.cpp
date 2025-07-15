@@ -81,11 +81,42 @@ int main(int argc, char* argv[]) {
 
     void* extradriverdata = nullptr;
     audio->init(32, FMOD_INIT_NORMAL, extradriverdata);*/
+    //
+    //FMOD::Sound* sound = nullptr;
+    //
+    //
+    //audio->createSound("test.wav", FMOD_DEFAULT, 0, &sound);
+    //
+    //audio->playSound(sound, 0, false, nullptr);
+    
 
-    FMOD::Sound* sound = nullptr;
-    audio->createSound("test.wav", FMOD_DEFAULT, 0, &sound);
+    // initialize sounds
+    //std::vector<FMOD::Sound*> sounds;
 
-    audio->playSound(sound, 0, false, nullptr);
+    audio.AddSound("bass.wav", "bass");
+    audio.AddSound("snare.wav", "snare");
+    audio.AddSound("open_hat.wav", "openhat");
+    audio.AddSound("clap.wav", "clap");
+    audio.AddSound("cowbell.wav", "cowbell");
+    audio.AddSound("close-hat.wav", "closehat");
+
+    //audio->createSound("bass.wav", FMOD_DEFAULT, 0, &sound);
+   /* sounds.push_back(sound);
+
+    audio->createSound("snare.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("open-hat.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("clap.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("cowbell.wav", FMOD_DEFAULT, 0, &sound);
+    sounds.push_back(sound);
+
+    audio->createSound("close-hat.wav", FMOD_DEFAULT, 0, &sound);
+        sounds.push_back(sound);*/
 
     //create stars
     vector<vec2> stars;
@@ -112,59 +143,45 @@ int main(int argc, char* argv[]) {
 
         //audio->update();
 
-        std::vector<FMOD::Sound*> sounds;
-        audio->createSound("bass.wav", FMOD_DEFAULT, 0, &sound);
-        sounds.push_back(sound);
-
-        audio->createSound("snare.wav", FMOD_DEFAULT, 0, &sound);
-        sounds.push_back(sound);
-
-        audio->createSound("open-hat.wav", FMOD_DEFAULT, 0, &sound);
-        sounds.push_back(sound);
-
-        audio->createSound("clap.wav", FMOD_DEFAULT, 0, &sound);
-        sounds.push_back(sound);
-
-        audio->createSound("cowbell.wav", FMOD_DEFAULT, 0, &sound);
-        sounds.push_back(sound);
-
-        audio->createSound("close-hat.wav", FMOD_DEFAULT, 0, &sound);
-        sounds.push_back(sound);
 
         if (input.getKeyDown(SDL_SCANCODE_Q) && !input.getPrevKeyDown(SDL_SCANCODE_Q))
         {
             // play bass sound, vector elements can be accessed like an array with [#]
-            audio->playSound(sounds[0], nullptr, false, nullptr);
+            audio.PlaySound("bass");
         }
 
         if (input.getKeyDown(SDL_SCANCODE_W) && !input.getPrevKeyDown(SDL_SCANCODE_W))
         {
             // play snare sound, vector elements can be accessed like an array with [#]
-            audio->playSound(sounds[1], nullptr, false, nullptr);
+            audio.PlaySound("snare");
         }
 
         if (input.getKeyDown(SDL_SCANCODE_E) && !input.getPrevKeyDown(SDL_SCANCODE_E))
         {
             // play open-hat sound, vector elements can be accessed like an array with [#]
-            audio->playSound(sounds[2], nullptr, false, nullptr);
+            //audio->playSound(sounds[2], nullptr, false, nullptr);
+            audio.PlaySound("openhat");
         }
 
         if (input.getKeyDown(SDL_SCANCODE_A) && !input.getPrevKeyDown(SDL_SCANCODE_A))
         {
             // play clap sound, vector elements can be accessed like an array with [#]
-            audio->playSound(sounds[3], nullptr, false, nullptr);
+            //audio->playSound(sounds[3], nullptr, false, nullptr);
+            audio.PlaySound("clap");
         }
 
         if (input.getKeyDown(SDL_SCANCODE_S) && !input.getPrevKeyDown(SDL_SCANCODE_S))
         {
             // play cowbell sound, vector elements can be accessed like an array with [#]
-            audio->playSound(sounds[4], nullptr, false, nullptr);
+            //audio->playSound(sounds[4], nullptr, false, nullptr);
+            audio.PlaySound("cowbell");
         }
 
         if (input.getKeyDown(SDL_SCANCODE_D) && !input.getPrevKeyDown(SDL_SCANCODE_D))
         {
             // play close-hat sound, vector elements can be accessed like an array with [#]
-            audio->playSound(sounds[5], nullptr, false, nullptr);
+            //audio->playSound(sounds[5], nullptr, false, nullptr);
+            audio.PlaySound("closehat");
         }
 
         input.Update();
