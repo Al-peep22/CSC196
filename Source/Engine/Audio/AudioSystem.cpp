@@ -54,7 +54,7 @@ namespace viper {
         // create sound from key
        FMOD::Sound* sound = nullptr;
        FMOD_RESULT result = system->createSound(filename.c_str(), FMOD_DEFAULT, 0, &sound);
-       if (CheckFMODResult(result)) { return false; }
+       if (!CheckFMODResult(result)) { return false; }
 
        // insert sound into map
        sounds[key] = sound;
@@ -78,7 +78,7 @@ namespace viper {
 
         // play sound from key
         FMOD_RESULT result = system->playSound(sounds[key], 0, false, nullptr);
-        if (CheckFMODResult(result)) { return false; }
+        if (!CheckFMODResult(result)) { return false; }
 
         return true;
     }

@@ -77,7 +77,11 @@ int main(int argc, char* argv[]) {
     viper::AudioSystem audio;
     audio.Initialize();
 
-    std::vector<viper::vec2> exp_points{ viper::vec2{-5,-5}, viper::vec2{5,-5}, viper::vec2{5,5}, viper::vec2{-5,5} };
+    std::vector<viper::vec2> exp_points{ 
+        viper::vec2{-5,-5}, 
+        viper::vec2{5,-5}, 
+        viper::vec2{5,5}, 
+        viper::vec2{-5,5} };
 
     viper::Model model{ exp_points, viper::vec3{ 0, 0, 1} };
 
@@ -100,7 +104,7 @@ int main(int argc, char* argv[]) {
 
     audio.AddSound("bass.wav", "bass");
     audio.AddSound("snare.wav", "snare");
-    audio.AddSound("open_hat.wav", "openhat");
+    audio.AddSound("open-hat.wav", "openhat");
     audio.AddSound("clap.wav", "clap");
     audio.AddSound("cowbell.wav", "cowbell");
     audio.AddSound("close-hat.wav", "closehat");

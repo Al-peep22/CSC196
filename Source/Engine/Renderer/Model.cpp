@@ -14,7 +14,7 @@ namespace viper {
 		renderer.SetColor(color.x, color.y, color.z);
 
 		// iterate through all points, draw line
-		for (int i = 0; i < points.size(); i++) {
+		for (int i = 0; i < points.size()-1; i++) {
 			vec2 p1 = (points[i].Rotate(rotation) * scale) + position;
 			vec2 p2 = (points[i + 1].Rotate(rotation) * scale) + position;
 
