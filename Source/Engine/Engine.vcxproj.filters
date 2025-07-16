@@ -24,6 +24,9 @@
     <Filter Include="Source\Audio">
       <UniqueIdentifier>{356a5ca0-303e-4833-8761-b8c5f3980faf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Game">
+      <UniqueIdentifier>{266b2a24-7779-4f35-aedc-267f8fa5283f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -43,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="Renderer\Model.cpp">
       <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Actor.cpp">
+      <Filter>Source\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +81,12 @@
     </ClInclude>
     <ClInclude Include="Renderer\Model.h">
       <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Transform.h">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Actor.h">
+      <Filter>Source\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

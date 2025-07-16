@@ -13,5 +13,9 @@ namespace viper {
 		int getRandomInt(int min, int max) { return min + getRandomInt(max - min + 1); }
 
 		inline float getRandomFloat() { return rand() / (float)RAND_MAX; }
+
+		inline float getRandomFloat(float max) { return rand() / (float)max; }
+
+		inline float getRandomFloat(float min, float max) { return min+rand() / (float)max; }
 	}
 }

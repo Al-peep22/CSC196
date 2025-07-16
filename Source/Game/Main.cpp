@@ -1,17 +1,19 @@
-#include "../Engine/Math/Math.h"
-#include "../Engine/Math/Vector2.h"
+#include "../Engine/Audio/AudioSystem.h"
 #include "../Engine/Core/Random.h"
 #include "../Engine/Core/Time.h"
+#include "../Engine/Input/InputSystem.h"
+#include "../Engine/Math/Math.h"
+#include "../Engine/Math/Vector2.h"
+#include "../Engine/Math/Transform.h"
+#include "../Engine/Game/Actor.h"
+#include "../Engine/Renderer/Renderer.h"
+#include "../Engine/Renderer/Model.h"
+#include <fmod.hpp>  
 #include <vector>
 #include <iostream>
 #include <SDL3/SDL.h>
-#include "../Engine/Renderer/Renderer.h"
-#include "../Engine/Renderer/Model.h"
-#include "../Engine/Input/InputSystem.h"
-//#include <ranges>
-#include <fmod.hpp>  
-#include "../Engine/Audio/AudioSystem.h"
 
+//#include <ranges>
 //#include "Audio/AudioSystem.h"
 
 // Ensure the file "../Engine/Audio/AudioSystem.h" exists in the specified path relative to the current file.  
@@ -84,7 +86,8 @@ int main(int argc, char* argv[]) {
         viper::vec2{-5,5},
         viper::vec2{-5,-5}
     };
-    viper::Model model{ sqr_points, viper::vec3{ 255, 255, 255} };
+    viper::Model sqr_model{ sqr_points, viper::vec3{ 255, 255, 255} };
+    viper::Model* model = new Model{ sqr_points, viper::vec3{ 255, 255, 255} };
 
     std::vector<viper::vec2> boat_points{
         viper::vec2{0,2},
@@ -100,6 +103,7 @@ int main(int argc, char* argv[]) {
     };
     viper::Model boat_Model{ boat_points, viper::vec3{ 255, 255, 255} };
 
+    viper::Transform transform{ {640,512}, 0 , 20 };
     /*FMOD::System* audio;
     FMOD::System_Create(&audio);
 
@@ -113,6 +117,13 @@ int main(int argc, char* argv[]) {
     //
     //audio->playSound(sound, 0, false, nullptr);
     
+    std::vector<Actor> actors;
+    for (int i = 0; i < 10; i++) {
+        viper::Transform m_transform{ {viper::random::getRandomFloat() * width, viper::random::getRandomFloat() * height },(float)viper::random::getRandomInt(360),(float)viper::random::getRandomInt(50) };
+        viper::Actor actor{m_transform,model};
+        actors.push_back(actor);
+    }
+    //viper::Actor actor{ transform, model};
 
     // initialize sounds
     //std::vector<FMOD::Sound*> sounds;
@@ -168,8 +179,9 @@ int main(int argc, char* argv[]) {
         audio.Update();
 
         //audio->update();
+        input.Update();
 
-
+        /*
         if (input.getKeyDown(SDL_SCANCODE_Q) && !input.getPrevKeyDown(SDL_SCANCODE_Q))
         {
             // play bass sound, vector elements can be accessed like an array with [#]
@@ -210,7 +222,6 @@ int main(int argc, char* argv[]) {
             audio.PlaySound("closehat");
         }
 
-        input.Update();
         if (input.GetKeyPressed(SDL_SCANCODE_A)) {
             cout << "Pressed \n";
         }
@@ -218,17 +229,48 @@ int main(int argc, char* argv[]) {
         if (input.GetMouseButtonDown(viper::InputSystem::MouseButton::Left)) {
             cout << "mouse pressed \n";
         }
-
+        */
         vec2 mouse = input.GetMousePosition();
         //cout << mouse.x << " " << mouse.y << endl;
+
+        //if (input.getKeyDown(SDL_SCANCODE_A)) { transform.rotation += viper::math::degToRad(90) * time.GetDeltaTime(); }
+        //if (input.getKeyDown(SDL_SCANCODE_D)) { transform.rotation -= viper::math::degToRad(90) * time.GetDeltaTime(); }
+
+        int sqr_speed = 1;
+
+        /*if (input.getKeyDown(SDL_SCANCODE_W)) transform.position.y -= sqr_speed;
+        if (input.getKeyDown(SDL_SCANCODE_S)) transform.position.y += sqr_speed;
+        if (input.getKeyDown(SDL_SCANCODE_A)) transform.position.x -= sqr_speed;
+        if (input.getKeyDown(SDL_SCANCODE_D)) transform.position.x += sqr_speed;*/
+
+        viper::vec2 direction{ 0,0 };
+        if (input.getKeyDown(SDL_SCANCODE_W)) direction.y = -1;
+        if (input.getKeyDown(SDL_SCANCODE_S)) direction.y = 1;
+        if (input.getKeyDown(SDL_SCANCODE_A)) direction.x = -1;
+        if (input.getKeyDown(SDL_SCANCODE_D)) direction.x = 1;
+
+        if (direction.Lengthsqr() != 0) {
+            direction = direction.Normalized();
+        }
+        //transform.position += (direction * sqr_speed) * time.GetDeltaTime();
+        for (Actor& actor : actors) {
+            actor.GetTransform().position += (direction * sqr_speed) * time.GetDeltaTime();
+        }
+
 
         renderer.SetColor(0,0,0);
         renderer.Clear();
 
         //model.Draw(renderer,input.GetMousePosition(),viper::math::halfPi * 0.5f,10.0f);
 
-        //model.Draw(renderer,input.GetMousePosition(),time.GetTime(), 10.0f);
-        boat_Model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
+        for (auto& actor : actors) {
+            actor.Draw(renderer);
+        }
+
+        sqr_model.Draw(renderer,input.GetMousePosition(),time.GetTime(), 10.0f);
+        boat_Model.Draw(renderer, {640,512}, time.GetTime(), 50.0f);
+
+        sqr_model.Draw(renderer, transform);
 
 
         if (input.GetMouseButtonDown(viper::InputSystem::MouseButton::Left)) {
