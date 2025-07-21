@@ -9,7 +9,7 @@ namespace viper {
 
 	void viper::Actor::Draw(Renderer& renderer)
 	{
-		Draw(renderer, *transform);
+		model->Draw(renderer, transform);
 
 	}
 }

@@ -13,6 +13,6 @@ namespace viper{
 	}
 	void Scene::AddActor(std::unique_ptr<class Actor> actor)
 	{
-		actors.push_back(actor);
+		actors.push_back(std::move(actor));
 	}
 }

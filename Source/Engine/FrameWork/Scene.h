@@ -2,7 +2,7 @@
 #include <vector>
 #include <memory>
 
-namespace {
+namespace viper{
 	class Scene {
 	public:
 		Scene() = default;
