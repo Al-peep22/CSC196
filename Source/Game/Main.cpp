@@ -5,8 +5,8 @@
 #include "../Engine/Math/Math.h"
 #include "../Engine/Math/Vector2.h"
 #include "../Engine/Math/Transform.h"
-#include "../Engine/Game/Actor.h"
-#include "../Engine/Game/Scene.h"
+#include "../Engine/FrameWork/Actor.h"
+#include "../Engine/FrameWork/Scene.h"
 #include "../Engine/Renderer/Renderer.h"
 #include "../Engine/Renderer/Model.h"
 #include "Game/Player.h"
@@ -44,22 +44,24 @@
 using namespace std;
 using namespace viper;
 
+//define RENDERER viper::GetEngine().GetRenderer()
+
 int main(int argc, char* argv[]) {
-    std::unique_ptr<Time> time = std::make_unique<Time>();
-    //Time time;
-    std::unique_ptr<Renderer> renderer = std::make_unique<Renderer>();
-    //Renderer renderer;
+    //std::unique_ptr<Time> time = std::make_unique<Time>();
+    ////Time time;
 
-    int width = 1280;
-    int height = 1024;
+    //int width = 1280;
+    //int height = 1024;
 
-    renderer->Initialize();
-    renderer->CreateWindow("Screen",width, height);
+    //std::unique_ptr<Renderer> renderer = std::make_unique<Renderer>();
+    ////Renderer renderer;
+    //renderer->Initialize();
+    //renderer->CreateWindow("Screen",width, height);
 
-    std::unique_ptr<InputSystem> input = std::make_unique<InputSystem>();
-    //InputSystem input;
-    input->Initialize();
-
+    //std::unique_ptr<InputSystem> input = std::make_unique<InputSystem>();
+    ////InputSystem input;
+    //input->Initialize();
+    GetEngine().Initialize();
 
     /*SDL_Init(SDL_INIT_VIDEO);
 
@@ -82,9 +84,7 @@ int main(int argc, char* argv[]) {
     bool quit = false;
 
     // create audio system
-    std::unique_ptr<AudioSystem> audio = std::make_unique<AudioSystem>();
-    //viper::AudioSystem audio;
-    audio->Initialize();
+    
 
     std::vector<viper::vec2> sqr_points{ 
         viper::vec2{-5,-5}, 
@@ -141,7 +141,7 @@ int main(int argc, char* argv[]) {
     // initialize sounds
     //std::vector<FMOD::Sound*> sounds;
 
-    audio->AddSound("bass.wav", "bass");
+    GetEngine().GetAudio().AddSound("bass.wav", "bass");
     audio->AddSound("snare.wav", "snare");
     audio->AddSound("open-hat.wav", "openhat");
     audio->AddSound("clap.wav", "clap");
@@ -179,20 +179,22 @@ int main(int argc, char* argv[]) {
     std::vector<viper::vec2> points;
     //MAIN LOOP
     while (!quit) {
-        time->Tick();
+        //time->Tick();
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_EVENT_QUIT) {
                 quit = true;
             }          
         }
 
-        if (input->GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
+        GetEngine().Update();
 
-        // update engine systems
-        audio->Update();
+        if (GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
-        //audio->update();
-        input->Update();
+        //// update engine systems
+        //audio->Update();
+
+        ////audio->update();
+        //input->Update();
 
         /*
         if (input.getKeyDown(SDL_SCANCODE_Q) && !input.getPrevKeyDown(SDL_SCANCODE_Q))
@@ -271,7 +273,7 @@ int main(int argc, char* argv[]) {
         }*/
 
 
-        renderer->SetColor(0,0,0);
+        GetEngine().GetRenderer().SetColor(0, 0, 0);
         renderer->Clear();
 
         //model.Draw(renderer,input.GetMousePosition(),viper::math::halfPi * 0.5f,10.0f);
@@ -280,7 +282,7 @@ int main(int argc, char* argv[]) {
             actor->Draw(*renderer);
         }*/
 
-        sqr_model.Draw(*renderer,input->GetMousePosition(),time->GetTime(), 10.0f);
+        sqr_model.Draw(*renderer,input->GetMousePosition(),GetEngine().GetTime()->GetTime(), 10.0f);
         boat_Model.Draw(*renderer, {640,512}, time->GetTime(), 50.0f);
 
         sqr_model.Draw(*renderer, transform);
@@ -305,7 +307,7 @@ int main(int argc, char* argv[]) {
             star += speed * time->GetDeltaTime();
             //star = star.Add(speed);
 
-            if (star[0] > width) star[0] = 0;
+            if (star[0] > GetEngine().width) star[0] = 0;
             if (star[0] < 0) star[0] = width;
             renderer->SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
             renderer->DrawPoint(star.x, star.y);
@@ -319,7 +321,7 @@ int main(int argc, char* argv[]) {
             renderer.DrawPoint(v.x,v.y);
             renderer.DrawPoint(random::getRandomFloat() * width, random::getRandomFloat()* height);
         }*/
-        renderer->Present();
+        GetEngine().GetRenderer().Present();
 
 
 
