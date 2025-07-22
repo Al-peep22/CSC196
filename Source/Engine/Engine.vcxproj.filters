@@ -97,5 +97,8 @@
     <ClInclude Include="Engine.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="FrameWork\Game.h">
+      <Filter>Source\FrameWork</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -203,6 +203,7 @@
     <ClInclude Include="Core\Time.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FrameWork\Actor.h" />
+    <ClInclude Include="FrameWork\Game.h" />
     <ClInclude Include="FrameWork\Scene.h" />
     <ClInclude Include="Input\InputSystem.h" />
     <ClInclude Include="Math\Math.h" />
