@@ -1,10 +1,17 @@
 #pragma once
 #include "../Math/Transform.h"
+#include <string>
 #include <memory>
 //#include "../Renderer/Model.h"
 
 namespace viper {
 	class Actor {
+	public:
+		std::string name;
+		std::string tag;
+
+		vec2 velocity{0,0};
+
 	public:
 		Actor() = default;
 		Actor(const viper::Transform& transform, std::shared_ptr<class Model> model) :
@@ -19,6 +26,6 @@ namespace viper {
 	protected:
 		Transform transform;
 		std::shared_ptr<Model> model;
-		//Model* model;
+		
 	};
 }

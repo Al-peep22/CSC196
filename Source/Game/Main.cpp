@@ -87,6 +87,26 @@ int main(int argc, char* argv[]) {
     // create audio system
     
 
+    
+    std::vector<viper::vec2> ship_points{ 
+        { 6, 0 },
+        { -2, -4 },
+        { -2, -6 },
+        { -4, -6 },
+        { -4, -2 },
+        { 4, 0 },
+        { -4, 2 },
+        { -4, 6 },
+        { -2, 6 },
+        { -2, 3 },
+        { 6, 0 },
+        { -3, 0 },
+        { -2, -4 },
+        { -3, 0 },
+        { -2, 3 }
+    };
+    viper::Model ship_Model{ ship_points, viper::vec3{ 255, 255, 255} };
+
     std::vector<viper::vec2> sqr_points{ 
         viper::vec2{-5,-5}, 
         viper::vec2{5,-5}, 
@@ -94,9 +114,8 @@ int main(int argc, char* argv[]) {
         viper::vec2{-5,5},
         viper::vec2{-5,-5}
     };
-
-    std::shared_ptr<viper::Model> model = std::make_shared<viper::Model>(sqr_points, viper::vec3{ 255, 255, 255 });
     viper::Model sqr_model{ sqr_points, viper::vec3{ 255, 255, 255} };
+    std::shared_ptr<viper::Model> model = std::make_shared<viper::Model>(sqr_points, viper::vec3{ 255, 255, 255 });
     //viper::Model* model = new Model{ sqr_points, viper::vec3{ 255, 255, 255} };
 
     Scene scene;
@@ -132,11 +151,14 @@ int main(int argc, char* argv[]) {
 
 
     std::vector<std::unique_ptr<viper::Actor>> actors;
-    for (int i = 0; i < 10; i++) {
-        viper::Transform m_transform{ {viper::random::getRandomFloat() * GetEngine().width, viper::random::getRandomFloat() * GetEngine().height },(float)viper::random::getRandomInt(360),(float)viper::random::getRandomInt(50) };
+    /*for (int i = 0; i < 10; i++) {
+        viper::Transform m_transform{ {viper::random::getRandomFloat() * GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * GetEngine().GetRenderer().GetHeight() },(float)viper::random::getRandomInt(360),(float)viper::random::getRandomInt(50) };
         std::unique_ptr<Player> player = std::make_unique<Player>(m_transform,model);
         scene.AddActor(std::move(player));
-    }
+    }*/
+    viper::Transform ship_transform{ {640,512}, 0 , 20 };
+    std::unique_ptr<Player> player = std::make_unique<Player>(ship_transform, ship_Model);
+    scene.AddActor(std::move(player));
     //viper::Actor actor{ transform, model};
 
     // initialize sounds
@@ -170,7 +192,7 @@ int main(int argc, char* argv[]) {
     //create stars
     vector<vec2> stars;
     for (int i = 0; i < 100; i++) {
-        stars.push_back(vec2{ random::getRandomFloat() * 1280, random::getRandomFloat() * 1024 });
+        stars.push_back(vec2{ random::getRandomFloat() * GetEngine().GetRenderer().GetWidth(), random::getRandomFloat() * GetEngine().GetRenderer().GetHeight() });
     }
     //vec2 v(30, 40);
 
@@ -188,15 +210,16 @@ int main(int argc, char* argv[]) {
         }
 
         GetEngine().Update();
+        //game->Update();
 
         if (GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) quit = true;
 
         //// update engine systems
         //audio->Update();
-
+        //
         ////audio->update();
         //input->Update();
-
+        //
         /*
         if (input.getKeyDown(SDL_SCANCODE_Q) && !input.getPrevKeyDown(SDL_SCANCODE_Q))
         {
@@ -246,70 +269,73 @@ int main(int argc, char* argv[]) {
             cout << "mouse pressed \n";
         }
         */
-        vec2 mouse = GetEngine().GetInput().GetMousePosition();
+        //vec2 mouse = GetEngine().GetInput().GetMousePosition();
         //cout << mouse.x << " " << mouse.y << endl;
-
+        //
         //if (input.getKeyDown(SDL_SCANCODE_A)) { transform.rotation += viper::math::degToRad(90) * time.GetDeltaTime(); }
         //if (input.getKeyDown(SDL_SCANCODE_D)) { transform.rotation -= viper::math::degToRad(90) * time.GetDeltaTime(); }
-
-        int sqr_speed = 1;
-
+        //
+        //int sqr_speed = 1;
+        //
         /*if (input.getKeyDown(SDL_SCANCODE_W)) transform.position.y -= sqr_speed;
         if (input.getKeyDown(SDL_SCANCODE_S)) transform.position.y += sqr_speed;
         if (input.getKeyDown(SDL_SCANCODE_A)) transform.position.x -= sqr_speed;
         if (input.getKeyDown(SDL_SCANCODE_D)) transform.position.x += sqr_speed;*/
-
-        viper::vec2 direction{ 0,0 };
+        /*viper::vec2 direction{ 0,0 };
         if (GetEngine().GetInput().getKeyDown(SDL_SCANCODE_W)) direction.y = -1;
         if (GetEngine().GetInput().getKeyDown(SDL_SCANCODE_S)) direction.y = 1;
         if (GetEngine().GetInput().getKeyDown(SDL_SCANCODE_A)) direction.x = -1;
         if (GetEngine().GetInput().getKeyDown(SDL_SCANCODE_D)) direction.x = 1;
-
+        //
         if (direction.Lengthsqr() != 0) {
             direction = direction.Normalized();
-        }
-        //transform.position += (direction * sqr_speed) * time.GetDeltaTime();
-        /*for (auto& actor : actors) {
-            actor->GetTransform().position += (direction * sqr_speed) * time->GetDeltaTime();
         }*/
+        //transform.position += (direction * sqr_speed) * time.GetDeltaTime();
+        for (auto& actor : actors) {
+            actor->Update(GetEngine().GetTime().GetDeltaTime());
+        }
 
 
         GetEngine().GetRenderer().SetColor(0, 0, 0);
         GetEngine().GetRenderer().Clear();
 
+        //game->Draw();
+
         //model.Draw(renderer,input.GetMousePosition(),viper::math::halfPi * 0.5f,10.0f);
         scene.Draw(GetEngine().GetRenderer());
-        /*for (auto& actor : actors) {
-            actor->Draw(*renderer);
-        }*/
-
-        sqr_model.Draw(GetEngine().GetRenderer(), GetEngine().GetInput().GetMousePosition(),GetEngine().GetTime().GetTime(), 10.0f);
-        boat_Model.Draw(GetEngine().GetRenderer(), {640,512}, GetEngine().GetTime().GetTime(), 50.0f);
-
-        sqr_model.Draw(GetEngine().GetRenderer(), transform);
-
-
-        if (GetEngine().GetInput().GetMouseButtonDown(viper::InputSystem::MouseButton::Left)) {
-            viper::vec2 position = GetEngine().GetInput().GetMousePosition();
-            if (points.empty()) points.push_back(position);
-            else if ((position - points.back()).Length() > 10) points.push_back(position);
+        for (auto& actor : actors) {
+            actor->Draw(GetEngine().GetRenderer());
         }
 
+        //sqr_model.Draw(GetEngine().GetRenderer(), GetEngine().GetInput().GetMousePosition(),GetEngine().GetTime().GetTime(), 10.0f);
+        //boat_Model.Draw(GetEngine().GetRenderer(), {640,512}, GetEngine().GetTime().GetTime(), 50.0f);
 
-        for (int i = 0; i < (int)points.size() - 1; i++) {
-            GetEngine().GetRenderer().SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
-            GetEngine().GetRenderer().DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
-        }
+        //ship_Model.Draw(GetEngine().GetRenderer(), transform); // Draws Ship (Not Actor)
 
-        vec2 speed{ -140.0f,0.0f };
-        float length = speed.Length();
+
+        ////Draw Rainbow Line Stuff
+      
+        //if (GetEngine().GetInput().GetMouseButtonDown(viper::InputSystem::MouseButton::Left)) {
+        //    viper::vec2 position = GetEngine().GetInput().GetMousePosition();
+        //    if (points.empty()) points.push_back(position);
+        //    else if ((position - points.back()).Length() > 10) points.push_back(position);
+        //}
+        //
+        //
+        //for (int i = 0; i < (int)points.size() - 1; i++) {
+        //    GetEngine().GetRenderer().SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
+        //    GetEngine().GetRenderer().DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
+        //}
+
+        vec2 star_speed{ -140.0f,0.0f };
+        float length = star_speed.Length();
 
         for (auto& star : stars) {
-            star += speed * GetEngine().GetTime().GetDeltaTime();
+            star += star_speed * GetEngine().GetTime().GetDeltaTime();
             //star = star.Add(speed);
 
-            if (star[0] > GetEngine().width) star[0] = 0;
-            if (star[0] < 0) star[0] = GetEngine().width;
+            if (star[0] > GetEngine().GetRenderer().GetWidth()) star[0] = 0;
+            if (star[0] < 0) star[0] = GetEngine().GetRenderer().GetWidth();
             GetEngine().GetRenderer().SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
             GetEngine().GetRenderer().DrawPoint(star.x, star.y);
         }
@@ -358,6 +384,8 @@ int main(int argc, char* argv[]) {
     SDL_Quit();*/
 
     //delete model;
+    
+    //game->Shutdown();
     GetEngine().Shutdown();
 
     return 0;

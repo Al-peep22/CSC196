@@ -23,6 +23,9 @@ namespace viper {
 
     bool Renderer::CreateWindow(const string& name, int width, int height)
     {
+        this->width = width;
+        this->height = height;
+
         //Create Window
         window = SDL_CreateWindow(name.c_str(), width, height, 0);
         if (window == nullptr) {
