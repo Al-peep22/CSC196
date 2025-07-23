@@ -20,8 +20,8 @@ void Player::Update(float dt)
 
 	//thrust
 	float thrust = 0;
-	if (viper::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = -1;
-	if (viper::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = +1;
+	if (viper::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = -1;
+	if (viper::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = +1;
 
 	viper::vec2 direction{1,0};
 	viper::vec2 force = direction.Rotate(viper::math::degToRad(transform.rotation))*thrust*speed;
