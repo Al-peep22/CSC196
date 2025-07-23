@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <iostream>
+#include <SDL3_ttf/SDL_ttf.h>
 
 namespace viper {
 	class Renderer {
@@ -22,7 +23,7 @@ namespace viper {
 		int GetHeight() const { return height; }
 
 	private:
-		//friend class Text;
+		friend class Text;
 
 		int width{ 0 };
 		int height{ 0 };

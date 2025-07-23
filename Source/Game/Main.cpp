@@ -9,6 +9,8 @@
 #include "FrameWork/Scene.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Model.h"
+#include "Renderer/Font.h"
+#include "Renderer/Text.h"
 #include "Game/Player.h"
 #include "Game/SpaceGame.h"
 #include <fmod.hpp>  
@@ -70,12 +72,12 @@ int main(int argc, char* argv[]) {
     game->Initialize();
 
     //// FONT CREATION
-    //errera::Font* font = new errera::Font();
-    //font->Load("ArcadeClassic.ttf", 20);
+    Font* font = new Font();
+    font->Load("ka1.ttf", 20);
 
     //// TEXT CREATION
-    //errera::Text* text = new errera::Text(font);
-    //text->Create(errera::GetEngine().GetRenderer(), "Hello World", errera::vec3{ 1, 1, 1 });
+    Text* text = new Text(font);
+    text->Create(GetEngine().GetRenderer(), "Hello World", vec3{ 1, 1, 1});
 
     /*SDL_Init(SDL_INIT_VIDEO);
 
@@ -213,6 +215,8 @@ int main(int argc, char* argv[]) {
     //SDL_FRect greenSquare{ 270, 190, 200, 200 };
 
     //std::vector<viper::vec2> points;
+    
+
     //MAIN LOOP
     while (!quit) {
         //time->Tick();
@@ -313,7 +317,7 @@ int main(int argc, char* argv[]) {
         GetEngine().GetRenderer().Clear();
 
         //// DRAW TEXT
-        //text->Draw(errera::GetEngine().GetRenderer(), 40.0f, 40.0f);
+        text->Draw(GetEngine().GetRenderer(), 40.0f, 40.0f);
 
         game->Draw();
 
