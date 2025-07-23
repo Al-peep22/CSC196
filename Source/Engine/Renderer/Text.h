@@ -17,6 +17,6 @@ namespace viper {
 
 	private:
 		Font* m_font{ nullptr };
-		SDL_Texture* m_texture{ nullptr };
+		SDL_Texture* texture{ nullptr };
 	};
 }

@@ -24,15 +24,15 @@ namespace viper {
 		Vector2 operator * (float s) const { return Vector2{ x * s,y * s }; }
 		Vector2 operator / (float s) const { return Vector2{ x / s,y / s }; }
 
-		Vector2& operator += (float s) const { x + s;y + s;return *this; }
-		Vector2& operator -= (float s) const { x - s;y - s;return *this; }
-		Vector2& operator *= (float s) const { x* s;y* s;return *this; }
-		Vector2& operator /= (float s) const { x / s;y / s;return *this; }
-
 		Vector2& operator += (const Vector2& v) { x += v.x; y += v.y; return *this; }
 		Vector2& operator -= (const Vector2& v) { x -= v.x; y -= v.y; return *this; }
 		Vector2& operator *= (const Vector2& v) { x *= v.x; y *= v.y; return *this; }
 		Vector2& operator /= (const Vector2& v) { x /= v.x; y /= v.y; return *this; }
+		
+		Vector2& operator += (float s) { x += s;y += s;return *this; }
+		Vector2& operator -= (float s) { x -= s;y -= s;return *this; }
+		Vector2& operator *= (float s) { x *= s;y *= s;return *this; }
+		Vector2& operator /= (float s) { x /= s;y /= s;return *this; }
 
 		//square root (x * x + y * y)
 		float Lengthsqr() const { return ((x * x) + (y * y)); }

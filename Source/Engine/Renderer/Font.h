@@ -15,6 +15,6 @@ namespace viper {
 	private:
 		friend class Text;
 
-		TTF_Font* m_ttfFont{ nullptr };
+		TTF_Font* ttfFont{ nullptr };
 	};
 }

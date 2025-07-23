@@ -11,6 +11,10 @@ namespace viper {
 		std::string tag;
 
 		vec2 velocity{0,0};
+		float damping{ 0.2f };
+
+		Transform transform;
+		class Scene* scene{ nullptr };
 
 	public:
 		Actor() = default;
@@ -24,7 +28,6 @@ namespace viper {
 		Transform& GetTransform() { return transform; }
 
 	protected:
-		Transform transform;
 		std::shared_ptr<Model> model;
 		
 	};

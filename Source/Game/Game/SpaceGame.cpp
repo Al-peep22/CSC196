@@ -11,6 +11,7 @@
 #include "Engine.h"
 
 #include <vector>
+#include "Enemy.h"
 
 bool SpaceGame::Initialize() {
     scene = std::make_unique<viper::Scene>();
@@ -39,6 +40,22 @@ bool SpaceGame::Initialize() {
     viper::Transform transform{ viper::vec2{ viper::GetEngine().GetRenderer().GetWidth() * 0.5f , viper::GetEngine().GetRenderer().GetHeight() * 0.5f}, 0, 2 };
     std::unique_ptr<Player> player = std::make_unique<Player>(transform, ship_model);
     scene->AddActor(std::move(player));
+
+    player->speed = 500.0f;
+    player->rotationRate = 180.0f;
+    player->damping = 0.5f;
+	player->name = "player";
+
+	scene->AddActor(std::move(player));
+
+    //create enemies
+	for (int i = 0; i < 10; i++) {
+		viper::Transform enemy_transform{ viper::vec2{ viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 2 };
+		std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, ship_model);
+		enemy->speed = viper::random::getRandomFloat() * 500;
+		enemy->damping = 1.5f;
+		scene->AddActor(std::move(enemy));
+	}
 
     // SAVING CODE FOR ENEMY CODE
     /*for (int i = 0; i < 10; i++) {

@@ -24,18 +24,19 @@ namespace viper {
 
 
 		constexpr int wrap(int value, int min, int max) {
+			if (value > min);
 			int range = max - min; // calculate range of map
 			int result = (value - min) % range; // shift value so range starts at 0
 			if (result < 0) result += range; // wrap forward if result is negative (value)
 			return min + result; // shift the result back to [min, max) range
 		}
 
-		//inline float wrap(float value, float min, float max) {
-		//	float range = max - min; // calculate range of map
-		//	float result = std::fmod(value - min) % range; // shift value so range starts at 0
-		//	if (result < 0) result += range; // wrap forward if result is negative (value)
-		//	return min + result; // shift the result back to [min, max) range
-		//}
+		inline float wrap(float value, float min, float max) {
+			float range = max - min; // calculate range of map
+			float result = std::fmod(value - min, range); // shift value so range starts at 0
+			if (result < 0) result += range; // wrap forward if result is negative (value)
+			return min + result; // shift the result back to [min, max) range
+		}
 
 		using std::min;
 		using std::max;

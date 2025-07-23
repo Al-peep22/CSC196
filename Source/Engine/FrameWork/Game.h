@@ -12,6 +12,9 @@ namespace viper {
 		virtual void Shutdown() = 0;
 
 	protected:
+		int score{ 0 };
+		int lives{ 0 };
+
 		std::unique_ptr<class Scene> scene;
 	};
 }

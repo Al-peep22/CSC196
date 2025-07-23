@@ -1,7 +1,7 @@
 #pragma once
 #include "Core/Time.h"
 #include <memory>
-//#include "Renderer/Renderer.h"
+#include "Renderer/Renderer.h"
 
 namespace viper {
 	class Renderer;

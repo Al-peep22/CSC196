@@ -28,8 +28,8 @@ namespace viper {
 		void Update();
 
 		//KEYBOARD INPUT
-		bool getKeyDown(uint8_t key) const { return this->keyboardState[key]; }
-		bool getPrevKeyDown(uint8_t key) const { return this->prevKeyboardState[key]; }
+		bool GetKeyDown(uint8_t key) const { return this->keyboardState[key]; }
+		bool GetPrevKeyDown(uint8_t key) const { return this->prevKeyboardState[key]; }
 		bool GetKeyPressed(uint8_t key) const { return !this->prevKeyboardState[key] && this->keyboardState[key]; }
 		bool GetKeyReleased(uint8_t key) const { return this->prevKeyboardState[key] && !this->keyboardState[key]; }
 

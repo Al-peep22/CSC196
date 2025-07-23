@@ -43,7 +43,7 @@ namespace viper {
     {  
         std::string key = (name.empty()) ? filename : name;
 
-        key = viper::tolower(key);
+        key = viper::toLower(key);
 
         // check if key exists in sounds map
         if (sounds.find(key) != sounds.end()) {

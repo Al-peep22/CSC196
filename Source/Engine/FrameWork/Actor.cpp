@@ -5,6 +5,7 @@ namespace viper {
 	void viper::Actor::Update(float dt)
 	{
 		transform.position += velocity * dt;
+		velocity *= (1.0f / (1.0f + damping * dt));
 	}
 
 	void viper::Actor::Draw(Renderer& renderer)
