@@ -8,6 +8,7 @@ public:
 		Initialize,
 		Title,
 		StartGame,
+		StartRound,
 		Game,
 		PlayerDead,
 		GameOver,

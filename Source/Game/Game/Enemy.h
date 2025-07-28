@@ -1,5 +1,3 @@
-#pragma once
-#pragma once
 #include "FrameWork/Actor.h"
 
 class Enemy : public viper::Actor {
