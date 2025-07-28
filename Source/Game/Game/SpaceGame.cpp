@@ -18,6 +18,7 @@
 bool SpaceGame::Initialize() {
     scene = std::make_unique<viper::Scene>();
 
+    // SHIP POINTS
     /*std::vector<viper::vec2> ship_points{
             { 6, 0 },
             { -2, -4 },
@@ -36,8 +37,10 @@ bool SpaceGame::Initialize() {
             { -2, 3 }
     };*/
 
+	// CREATE PLAYER
+    /*
     //viper::Model ship_Model{ ship_points, viper::vec3{ 255, 255, 255} };
-    /*std::shared_ptr<viper::Model> ship_model = std::make_shared<viper::Model>(GameData::ship_points, viper::vec3{ 96, 255, 41 });
+    std::shared_ptr<viper::Model> ship_model = std::make_shared<viper::Model>(GameData::ship_points, viper::vec3{ 96, 255, 41 });
 
     viper::Transform transform{ viper::vec2{ viper::GetEngine().GetRenderer().GetWidth() * 0.5f , viper::GetEngine().GetRenderer().GetHeight() * 0.5f}, 0, 2 };
     std::unique_ptr<Player> player = std::make_unique<Player>(transform, ship_model);
@@ -50,19 +53,19 @@ bool SpaceGame::Initialize() {
 
 	scene->AddActor(std::move(player));*/
 
-
-
-    //create enemies
- //   std::shared_ptr<viper::Model> enemy_model = std::make_shared<viper::Model>(GameData::enemy_points, viper::vec3{ 255, 46, 46 });
-	//for (int i = 0; i < 10; i++) {
-	//	viper::Transform enemy_transform{ viper::vec2{ viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 2 };
-	//	std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, enemy_model);
-	//	enemy->speed = viper::random::getRandomFloat() * 500;
-	//	enemy->damping = 1.5f;
- //       /*enemy->name = "enemy";
-	//	enemy->tag = "enemy";*/
-	//	scene->AddActor(std::move(enemy));
-	//}
+    //CREATE ENEMIES
+    /*
+    std::shared_ptr<viper::Model> enemy_model = std::make_shared<viper::Model>(GameData::enemy_points, viper::vec3{ 255, 46, 46 });
+	for (int i = 0; i < 10; i++) {
+		viper::Transform enemy_transform{ viper::vec2{ viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 2 };
+		std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, enemy_model);
+		enemy->speed = viper::random::getRandomFloat() * 500;
+		enemy->damping = 1.5f;
+        //enemy->name = "enemy";
+		//enemy->tag = "enemy";
+		scene->AddActor(std::move(enemy));
+	}
+    */
 
     // SAVING CODE FOR ENEMY CODE
     /*for (int i = 0; i < 10; i++) {

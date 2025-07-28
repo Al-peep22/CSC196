@@ -1,11 +1,12 @@
 #include "Enemy.h"
 #include "Engine.h"
 #include "./FrameWork/Scene.h"
+#include "Player.h"
 using namespace viper;
 void Enemy::Update(float dt)
 {
 
-	Actor* player = scene->GetActorByName("player");
+	Player* player = scene->GetActorByName<Player>("player");
 	if (player) {
 		vec2 direction{0, 0};
 		direction = player->transform.position - transform.position;
@@ -13,7 +14,7 @@ void Enemy::Update(float dt)
 		transform.rotation = math::radToDeg(direction.Angle()); // Adjust rotation to face the player
 	}
 
-
+	
 	vec2 direction{ 1, 0 };
 	vec2 force = vec2{1,0}.Rotate(math::degToRad(transform.rotation)) * speed;
 	velocity += force * dt;
