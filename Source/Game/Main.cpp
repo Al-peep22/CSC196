@@ -94,6 +94,16 @@ public:
 
 int main(int argc, char* argv[]) {
 
+    std::shared_ptr<A> a = std::make_shared<A>();
+	cout << a.use_count() << endl; 
+    {
+        std::shared_ptr<A> b = a;
+	    cout << a.use_count() << endl; 
+    }
+	cout << a.use_count() << endl;
+
+    return 0;
+
 
     //std::unique_ptr<Time> time = std::make_unique<Time>();
     ////Time time;
