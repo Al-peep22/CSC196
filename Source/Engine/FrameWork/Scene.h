@@ -13,9 +13,37 @@ namespace viper{
 
 		void AddActor(std::unique_ptr<Actor> actor);
 
-		Actor* GetActorByName(const std::string& name);
 
 	private:
 		std::vector<std::unique_ptr<Actor>> actors;
+
+	public:
+        template<typename T = Actor> // Default template parameter added
+        inline T* GetActorByName(const std::string& name) {
+           for (auto& actor : actors) {
+               if (actor->name == name) {
+                   T* object = dynamic_cast<T*>(actor.get());
+                   if (object) {
+                       return object;
+                   }
+               }
+           }
+           return nullptr;
+        }
+
+		template<typename T>
+		std::vector<T*> GetActorsByTag(const std::string& tag) {
+			std::vector<T*> results;
+			for (auto& actor : actors) {
+				if (actor->tag == tag) {
+					T* object = dynamic_cast<T*>(actor.get());
+					if (object) {
+						results.push_back(object);
+					}
+				}
+			}
+			return results;
+		}
+
 	};
 }

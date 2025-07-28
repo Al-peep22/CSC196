@@ -11,7 +11,7 @@ namespace viper {
 		std::string tag;
 
 		vec2 velocity{0,0};
-		float damping{ 0.2f };
+		float damping{ 0.0f };
 
 		Transform transform;
 		class Scene* scene{ nullptr };

@@ -19,7 +19,7 @@ namespace viper{
 		actors.push_back(std::move(actor));
 	}
 
-	Actor* Scene::GetActorByName(const std::string& name)
+	/*Actor* Scene::GetActorByName(const std::string& name)
 	{
 		for (auto& actor : actors) {
 			if (toLower(actor->name) == name) {
@@ -27,5 +27,5 @@ namespace viper{
 			}
 		}
 		return nullptr;
-	}
+	}*/
 }
