@@ -50,49 +50,50 @@ using namespace viper;
 
 //define RENDERER viper::GetEngine().GetRenderer()
 
+class A {
+public:
+    A() { std::cout << "class A - Constructor\n"; }
+    ~A() { std::cout << "class A - Destructor\n"; }
+    virtual void ID() { std::cout << "class A\n"; }
+};
+
+class B : public A {
+public:
+    B() { std::cout << "class B - Constructor\n"; }
+    ~B() { std::cout << "class B - Destructor\n"; }
+
+    virtual void ID() { std::cout << "class B\n"; }
+    void Run() { std::cout << "class B - Run\n"; }
+};
+
+class C : public A {
+public:
+    C() { std::cout << "class C - Constructor\n"; }
+    ~C() { std::cout << "class C - Destructor\n"; }
+
+    virtual void ID() { std::cout << "class C\n"; }
+    virtual void Go() { std::cout << "class C - Go\n"; }
+};
+
+class D : public C {
+public:
+    D() { std::cout << "class D - Constructor\n"; }
+    ~D() { std::cout << "class D - Destructor\n"; }
+
+    virtual void ID() { std::cout << "class D\n"; }
+    virtual void Go() { std::cout << "class D - Go\n"; }
+};
+
+class E {
+public:
+    E() { std::cout << "class E - Constructor\n"; }
+    ~E() { std::cout << "class D - Destructor\n"; }
+
+    virtual void ID() { std::cout << "class E\n"; }
+};
+
 int main(int argc, char* argv[]) {
 
-    class A {
-    public:
-        A() { std::cout << "class A - Constructor\n"; }
-        ~A() { std::cout << "class A - Destructor\n"; }
-        virtual void ID() { std::cout << "class A\n"; }
-    };
-
-    class B : public A {
-    public:
-        B() { std::cout << "class B - Constructor\n"; }
-        ~B() { std::cout << "class B - Destructor\n"; }
-
-        virtual void ID() { std::cout << "class B\n"; }
-        void Run() { std::cout << "class B - Run\n"; }
-    };
-
-    class C : public A {
-    public:
-        C() { std::cout << "class C - Constructor\n"; }
-        ~C() { std::cout << "class C - Destructor\n"; }
-
-        virtual void ID() { std::cout << "class C\n"; }
-        virtual void Go() { std::cout << "class C - Go\n"; }
-    };
-
-    class D : public C {
-    public:
-        D() { std::cout << "class D - Constructor\n"; }
-        ~D() { std::cout << "class D - Destructor\n"; }
-
-        virtual void ID() { std::cout << "class D\n"; }
-        virtual void Go() { std::cout << "class D - Go\n"; }
-    };
-
-    class E {
-    public:
-        E() { std::cout << "class E - Constructor\n"; }
-        ~E() { std::cout << "class D - Destructor\n"; }
-
-        virtual void ID() { std::cout << "class E\n"; }
-    };
 
     //std::unique_ptr<Time> time = std::make_unique<Time>();
     ////Time time;
