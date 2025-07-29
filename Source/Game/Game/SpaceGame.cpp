@@ -16,7 +16,17 @@
 #include "GameData.h"
 
 bool SpaceGame::Initialize() {
-    scene = std::make_unique<viper::Scene>();
+    scene = std::make_unique<viper::Scene>(this);
+
+	titleFont = std::make_shared<viper::Font>();
+	titleFont->Load(GameData::gameFont, 128);
+
+	uiFont = std::make_shared<viper::Font>();
+	uiFont->Load(GameData::gameFont, 48);
+
+	titleText = std::make_unique<viper::Text>(titleFont);
+	scoreText = std::make_unique<viper::Text>(uiFont);
+	livesText = std::make_unique<viper::Text>(uiFont);
 
     // SHIP POINTS
     /*std::vector<viper::vec2> ship_points{
@@ -92,9 +102,9 @@ void SpaceGame::Update(float dt) {
         gameState = GameState::Title;
 		break;
 	case SpaceGame::GameState::Title:
-		if (viper::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE)) {
-			gameState = GameState::StartGame;
-		}        
+		/*if (viper::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE)) {
+		}        */
+		gameState = GameState::StartGame;
 		break;
 	case SpaceGame::GameState::StartGame:
         score = 0;
@@ -126,7 +136,7 @@ void SpaceGame::Update(float dt) {
             viper::Transform enemy_transform{ viper::vec2{ viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 5 };
             std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, enemy_model);
 
-            enemy->speed = (viper::random::getReal() * 800) + 500;
+            enemy->speed = 0;//(viper::random::getReal() * 800) + 500;
             enemy->damping = 0.2f;
             enemy->name = "enemy";
             enemy->tag = "enemy";

@@ -10,5 +10,6 @@ public:
 	}
 
 	void Update(float dt) override;
-private:
+
+	void OnCollision(Actor* other) override;
 };

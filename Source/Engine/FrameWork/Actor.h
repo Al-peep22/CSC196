@@ -13,6 +13,10 @@ namespace viper {
 		vec2 velocity{0,0};
 		float damping{ 0.0f };
 
+		bool destroyed{ false };
+		float lifespan{ 0 };
+	
+
 		Transform transform;
 		class Scene* scene{ nullptr };
 
@@ -25,7 +29,11 @@ namespace viper {
 		virtual void Update(float dt);
 		virtual void Draw(class Renderer& renderer);
 
-		Transform& GetTransform() { return transform; }
+		Transform& GetTransform() { return transform; }//Dont need not private anymore
+
+		virtual void OnCollision(Actor* other) = 0;
+
+		float GetRadius();
 
 	protected:
 		std::shared_ptr<Model> model;

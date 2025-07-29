@@ -24,3 +24,12 @@ void Enemy::Update(float dt)
 	transform.position.x = math::wrap(transform.position.x, 0.0f, (float)GetEngine().GetRenderer().GetWidth());
 	transform.position.y = math::wrap(transform.position.y, 0.0f, (float)GetEngine().GetRenderer().GetHeight());
 }
+
+void Enemy::OnCollision(Actor* other)
+{
+	if (other->tag != tag) {
+		destroyed = true;
+		scene->GetGame()->AddPoints(100);
+		//game->AddPoints(100);
+	}
+}

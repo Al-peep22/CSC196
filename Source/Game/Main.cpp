@@ -504,9 +504,10 @@ int main(int argc, char* argv[]) {
     SDL_Quit();*/
 
     //delete model;
+    game->Shutdown();
+    game.release();
     
     GetEngine().Shutdown();
-    game->Shutdown();
 
     return 0;
 }

@@ -4,8 +4,29 @@
 #include "Scene.h"
 namespace viper{
 	void Scene::Update(float dt) {
+		//update all actors
 		for (auto& actor : actors) {
 			actor->Update(dt);
+		}
+
+		//remove destroyed actors
+		for (auto iter = actors.begin(); iter != actors.end(); ) {
+			if ((*iter)->destroyed) {
+				actors.erase(iter);
+			}
+			else {iter++;}
+		}
+
+		//check for collisions
+		for (auto& actorA : actors) {
+			for (auto& actorB : actors) {
+				if (actorA == actorB || (actorA->destroyed || actorB->destroyed)) continue;
+				float distance = (actorA->transform.position - actorB->transform.position).Length();
+				if (distance <= actorA->GetRadius() + actorB->GetRadius()) {
+					actorA->OnCollision(actorB.get());
+					actorB->OnCollision(actorA.get());
+				}
+			}
 		}
 	}
 	void Scene::Draw(Renderer& renderer) {

@@ -2,11 +2,15 @@
 #include <vector>
 #include <memory>
 #include "Actor.h"
+#include <list>
 
 namespace viper{
+	class Game;
+	class Actor;
+
 	class Scene {
 	public:
-		Scene() = default;
+		Scene(Game* game) : game{ game } {}
 
 		void Update(float dt);
 		void Draw(class Renderer& renderer);
@@ -20,9 +24,11 @@ namespace viper{
 		template<typename T = Actor>
 		std::vector<T*> GetActorsByTag(const std::string& tag);
 
-	private:
-		std::vector<std::unique_ptr<Actor>> actors;
+		class Game* GetGame() { return game; }
 
+	private:
+		class Game* game{nullptr};
+		std::list<std::unique_ptr<Actor>> actors;
 	};
  
 	template<typename T>
