@@ -113,6 +113,8 @@ void SpaceGame::Update(float dt) {
         break;
     case SpaceGame::GameState::StartRound:
     {
+        scene->RemoveAllActors();
+        // CREATE PLAYER
         std::shared_ptr<viper::Model> ship_model = std::make_shared<viper::Model>(GameData::ship_points, viper::vec3{ 0.37f, 1, 0.16f });
         viper::Transform transform{ viper::vec2{ viper::GetEngine().GetRenderer().GetWidth() * 0.5f , viper::GetEngine().GetRenderer().GetHeight() * 0.5f}, 0, 2 };
         std::unique_ptr<Player> player = std::make_unique<Player>(transform, ship_model);
@@ -132,12 +134,15 @@ void SpaceGame::Update(float dt) {
         enemySpawnTimer -= dt;
         if (enemySpawnTimer <= 0) {
             enemySpawnTimer = 4;
+            // CREATE ENEMY
             std::shared_ptr<viper::Model> enemy_model = std::make_shared<viper::Model>(GameData::enemy_points, viper::vec3{ 1, 0.18f, 0.18f });
             viper::Transform enemy_transform{ viper::vec2{ viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 5 };
             std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, enemy_model);
 
-            enemy->speed = 0;//(viper::random::getReal() * 800) + 500;
+            enemy->speed = (viper::random::getReal() * 100) + 100;
             enemy->damping = 0.2f;
+			enemy->fireTime = 3;
+			enemy->fireTimer = 5;
             enemy->name = "enemy";
             enemy->tag = "enemy";
 
@@ -145,11 +150,16 @@ void SpaceGame::Update(float dt) {
         }
         break;
 	case SpaceGame::GameState::PlayerDead:
+        stateTimer -= dt;
         lives--;
         if (lives == 0) { gameState = GameState::GameOver; }
         else { gameState = GameState::StartRound; }
 		break;
 	case SpaceGame::GameState::GameOver:
+        stateTimer -= dt;
+        if (stateTimer <= 0) {
+
+        }
         break;
     }
     scene->Update(viper::GetEngine().GetTime().GetDeltaTime());
@@ -160,6 +170,8 @@ void SpaceGame::Draw() {
 
     //// DRAW TEXT
     //_text->Draw(viper::GetEngine().GetRenderer(), 40.0f, 40.0f);
+
+	//viper::GetEngine()GetParticalSystem().Draw(viper::GetEngine().GetRenderer());
 }
 
 void SpaceGame::Shutdown() {

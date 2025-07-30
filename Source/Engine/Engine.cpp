@@ -2,6 +2,7 @@
 #include "Renderer/Renderer.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
+#include "Renderer/ParticleSystem.h"
 
 namespace viper {
     bool Engine::Initialize()
@@ -16,11 +17,14 @@ namespace viper {
         this->audio = std::make_unique<AudioSystem>();
         this->audio->Initialize();
 
+        particleSystem = std::make_unique<ParticleSystem>();
+
         return true;
     }
 
     void Engine::Shutdown()
     {
+		this->particleSystem.ShutDown();
         this->renderer->ShutDown();
         this->input->ShutDown();
         this->audio->ShutDown();
@@ -28,6 +32,7 @@ namespace viper {
 
     void Engine::Update()
     {
+		this->particleSystem.Update();
         this->time.Tick();
         this->input->Update();
         this->audio->Update();

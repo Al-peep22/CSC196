@@ -8,6 +8,7 @@
 #include "Rocket.h"
 #include "Renderer/Model.h"
 #include "FrameWork/Scene.h"
+#include "SpaceGame.h"
 
 using namespace viper;
 
@@ -57,5 +58,6 @@ void Player::OnCollision(Actor* other)
 {
 	if (other->tag != tag) {
 		destroyed = true;
+		//dynamic_cast<SpaceGame*>(scene->GetGame()->OnPlayerDeath();
 	}
 }
