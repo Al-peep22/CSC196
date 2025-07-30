@@ -1,6 +1,8 @@
 #include "GameData.h"
 
 namespace GameData {
+	std::string gameFont = "ka1.ttf";
+
     std::vector<viper::vec2> ship_points{
             { 6, 0 },
             { -2, -4 },
@@ -41,7 +43,7 @@ namespace GameData {
             { -1, 0 }
     };
     
-    std::vector<viper::vec2> Rocket_points{
+    std::vector<viper::vec2> rocket_points{
             { 6, 0 },
             { 5, -1 },
             { 3, -2 },

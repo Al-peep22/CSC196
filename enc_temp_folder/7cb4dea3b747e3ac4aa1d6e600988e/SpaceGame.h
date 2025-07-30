@@ -27,7 +27,6 @@ protected:
 private:
 	GameState gameState = GameState::Initialize;
 	float enemySpawnTimer = { 0 };
-	float stateTimer = {0};
 
 	std::shared_ptr<viper::Font> titleFont;
 	std::shared_ptr<viper::Font> uiFont;

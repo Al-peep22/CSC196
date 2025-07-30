@@ -13,8 +13,6 @@ using namespace viper;
 
 void Player::Update(float dt)
 {
-	speed = 200;
-	rotationRate = 180;
 
 	//rotation
 	float rotate = 0;

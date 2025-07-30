@@ -12,7 +12,7 @@ namespace viper{
 		//remove destroyed actors
 		for (auto iter = actors.begin(); iter != actors.end(); ) {
 			if ((*iter)->destroyed) {
-				actors.erase(iter);
+				iter = actors.erase(iter);
 			}
 			else {iter++;}
 		}

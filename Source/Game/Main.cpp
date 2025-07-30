@@ -98,47 +98,7 @@ public:
 
 int main(int argc, char* argv[]) {
 
-    // Get current directory path
-    std::cout << "Directory Operations:\n";
-    std::cout << "Current directory: " << viper::file::GetCurrentDirectory() << "\n";
-
-    // Set current directory path (current path + "Assets")
-    std::cout << "Setting directory to 'Assets'...\n";
     viper::file::SetCurrentDirectory("Assets");
-    std::cout << "New directory: " << viper::file::GetCurrentDirectory() << "\n\n";
-
-    // Get filenames in the current directory
-    std::cout << "Files in Directory:\n";
-    auto filenames = viper::file::GetFilesInDirectory(viper::file::GetCurrentDirectory());
-    for (const auto& filename : filenames) {
-        std::cout << filename << "\n";
-    }
-    std::cout << "\n";
-
-    // Get filename (filename.extension) only
-    if (!filenames.empty()) {
-        std::cout << "Path Analysis:\n";
-        std::string filename = viper::file::GetFilename(filenames[0]);
-        std::cout << "Filename only: " << filename << "\n";
-
-        // Get extension only
-        std::string ext = viper::file::GetExtension(filenames[0]);
-        std::cout << "Extension: " << ext << "\n\n";
-    }
-
-    // Read and display text file
-    std::cout << "Text File Reading:\n";
-    std::string str;
-    bool success = viper::file::ReadTextFile("test.txt", str);
-    if (success) {
-        std::cout << "Contents of test.txt:\n";
-        std::cout << str << "\n";
-    }
-    else {
-        std::cout << "Failed to read test.txt\n";
-    }
-
-    return 0;
 
     /*std::shared_ptr<A> a = std::make_shared<A>();
 	cout << a.use_count() << endl; 
@@ -172,11 +132,11 @@ int main(int argc, char* argv[]) {
     game->Initialize();
 
     //// FONT CREATION
-    Font* font = new Font();
+    std::shared_ptr<Font> font = std::make_shared <viper::Font>();
     font->Load("ka1.ttf", 20);
 
     //// TEXT CREATION
-    Text* text = new Text(font);
+    std::shared_ptr<Text> text = std::make_shared<viper::Text>(font);
     text->Create(GetEngine().GetRenderer(), "Hello World", vec3{ 1, 1, 1});
 
     /*SDL_Init(SDL_INIT_VIDEO);
@@ -456,7 +416,7 @@ int main(int argc, char* argv[]) {
 
             if (star[0] > GetEngine().GetRenderer().GetWidth()) star[0] = 0;
             if (star[0] < 0) star[0] = GetEngine().GetRenderer().GetWidth();
-            GetEngine().GetRenderer().SetColor(random::getRandomInt(256), random::getRandomInt(256), random::getRandomInt(256));
+            GetEngine().GetRenderer().SetColor((uint8_t)(random::getRandomInt(256)), random::getRandomInt(256), random::getRandomInt(256));
             GetEngine().GetRenderer().DrawPoint(star.x, star.y);
         }
 

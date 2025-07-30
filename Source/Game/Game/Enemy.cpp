@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "./FrameWork/Scene.h"
 #include "Player.h"
+#include "FrameWork/Game.h"
 using namespace viper;
 void Enemy::Update(float dt)
 {

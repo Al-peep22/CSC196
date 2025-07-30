@@ -113,7 +113,7 @@ void SpaceGame::Update(float dt) {
         break;
     case SpaceGame::GameState::StartRound:
     {
-        std::shared_ptr<viper::Model> ship_model = std::make_shared<viper::Model>(GameData::ship_points, viper::vec3{ 96, 255, 41 });
+        std::shared_ptr<viper::Model> ship_model = std::make_shared<viper::Model>(GameData::ship_points, viper::vec3{ 0.37f, 1, 0.16f });
         viper::Transform transform{ viper::vec2{ viper::GetEngine().GetRenderer().GetWidth() * 0.5f , viper::GetEngine().GetRenderer().GetHeight() * 0.5f}, 0, 2 };
         std::unique_ptr<Player> player = std::make_unique<Player>(transform, ship_model);
 
@@ -132,7 +132,7 @@ void SpaceGame::Update(float dt) {
         enemySpawnTimer -= dt;
         if (enemySpawnTimer <= 0) {
             enemySpawnTimer = 4;
-            std::shared_ptr<viper::Model> enemy_model = std::make_shared<viper::Model>(GameData::enemy_points, viper::vec3{ 255, 46, 46 });
+            std::shared_ptr<viper::Model> enemy_model = std::make_shared<viper::Model>(GameData::enemy_points, viper::vec3{ 1, 0.18f, 0.18f });
             viper::Transform enemy_transform{ viper::vec2{ viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 5 };
             std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, enemy_model);
 
