@@ -24,7 +24,7 @@ namespace viper {
 
     void Engine::Shutdown()
     {
-		this->particleSystem.ShutDown();
+		this->particleSystem->ShutDown();
         this->renderer->ShutDown();
         this->input->ShutDown();
         this->audio->ShutDown();
@@ -32,7 +32,7 @@ namespace viper {
 
     void Engine::Update()
     {
-		this->particleSystem.Update();
+		this->particleSystem->Update(GetTime().GetDeltaTime());
         this->time.Tick();
         this->input->Update();
         this->audio->Update();
