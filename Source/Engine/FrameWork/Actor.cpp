@@ -24,6 +24,6 @@ namespace viper {
 	}
 	float Actor::GetRadius()
 	{
-		return (model) ? model->GetRadius() * transform.scale: 0.0f;
+		return (model) ? model->GetRadius() * transform.scale * 0.8f : 0.0f;
 	}
 }

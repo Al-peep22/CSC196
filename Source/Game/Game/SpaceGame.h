@@ -2,6 +2,7 @@
 #include "Framework/Game.h"
 #include <Renderer/Font.h>
 #include "Renderer/Text.h"
+#include "Renderer/Renderer.h"
 
 class SpaceGame : public viper::Game {
 public:
@@ -20,7 +21,9 @@ public:
 	void Update(float dt) override;
 	void Shutdown() override;
 
-	void Draw() override;
+	void Draw(class viper::Renderer& renderer) override;
+
+	void OnPlayerDead();
 
 protected:
 	//std::unique_ptr<viper::Text> text;

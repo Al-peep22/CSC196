@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include "Renderer/Renderer.h"
 
 namespace viper {
 	class Game {
@@ -8,7 +9,7 @@ namespace viper {
 
 		virtual bool Initialize() = 0;
 		virtual void Update(float dt) = 0;
-		virtual void Draw() = 0;
+		virtual void Draw(class Renderer& renderer) = 0;
 		virtual void Shutdown() = 0;
 
 		void AddPoints(int points) {score += points;}
