@@ -1,9 +1,9 @@
 #include "ParticleSystem.h"
 
 namespace viper {
-	bool ParticleSystem::Initialize()
+	bool ParticleSystem::Initialize(int poolSize)
 	{
-		particles.resize(1000); // Reserve space for 1000 particles
+		particles.resize(poolSize); // Reserve space for 1000 particles
 		return false;
 	}
 

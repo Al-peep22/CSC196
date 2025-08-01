@@ -7,6 +7,8 @@
 #include "GameData.h"
 #include <Math/Vector3.h>
 #include "Renderer/Model.h"
+#include "Renderer/ParticleSystem.h"
+#include "Core/Random.h"
 using namespace viper;
 void Enemy::Update(float dt)
 {
@@ -53,6 +55,16 @@ void Enemy::OnCollision(Actor* other)
 	if (other->tag != tag) {
 		destroyed = true;
 		scene->GetGame()->AddPoints(100);
-		//game->AddPoints(100);
+		for (int i = 0; i < 100; i++) {
+
+			// CREATE PARTICAL EXPLOSION
+			viper::Particle particle;
+			particle.position = transform.position;
+			particle.velocity = viper::random::onUnitCircle() * random::getReal(10.0f,200.0f);
+			particle.color = vec3{ 1,1,1 };
+			particle.lifespan = 2;
+
+			viper::GetEngine().GetParticleSystem().AddParticle(particle);
+		}
 	}
 }

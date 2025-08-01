@@ -18,7 +18,7 @@ namespace viper {
         this->audio->Initialize();
 
         particleSystem = std::make_unique<ParticleSystem>();
-		particleSystem->Initialize();
+		particleSystem->Initialize(5000);
 
         return true;
     }

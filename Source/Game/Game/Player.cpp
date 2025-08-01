@@ -17,12 +17,13 @@ using namespace viper;
 
 void Player::Update(float dt)
 {
+	// CREATE PARTICAL EXPLOSION
 	viper::Particle particle;
 	particle.position = transform.position;
 	particle.velocity = viper::vec2{viper::random::getReal(-200.0f,200.0f),random::getReal(-200.0f,200.0f) };
 	particle.color = vec3{1,1,1};
-	particle.lifespan = 2;
-	GetEngine().GetParticleSystem().AddParticle(particle);
+	particle.lifespan = 0.5f;
+	
 
 	// ROTATION
 	float rotate = 0;
@@ -33,8 +34,8 @@ void Player::Update(float dt)
 
 	// THRUST
 	float thrust = 0;
-	if (viper::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = -1;
-	if (viper::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust = +1;
+	if (viper::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_S)) { thrust = -1; }
+	if (viper::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_W)) { thrust = +1; GetEngine().GetParticleSystem().AddParticle(particle);	}
 
 	// DIRECTION AND VELOCITY
 	viper::vec2 direction{1,0};

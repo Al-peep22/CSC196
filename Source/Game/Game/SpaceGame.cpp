@@ -29,70 +29,6 @@ bool SpaceGame::Initialize() {
 	scoreText = std::make_unique<viper::Text>(uiFont);
 	livesText = std::make_unique<viper::Text>(uiFont);
 
-    // SHIP POINTS
-    /*std::vector<viper::vec2> ship_points{
-            { 6, 0 },
-            { -2, -4 },
-            { -2, -6 },
-            { -4, -6 },
-            { -4, -2 },
-            { 4, 0 },
-            { -4, 2 },
-            { -4, 6 },
-            { -2, 6 },
-            { -2, 3 },
-            { 6, 0 },
-            { -3, 0 },
-            { -2, -4 },
-            { -3, 0 },
-            { -2, 3 }
-    };*/
-
-	// CREATE PLAYER
-    /*
-    //viper::Model ship_Model{ ship_points, viper::vec3{ 255, 255, 255} };
-    std::shared_ptr<viper::Model> ship_model = std::make_shared<viper::Model>(GameData::ship_points, viper::vec3{ 96, 255, 41 });
-
-    viper::Transform transform{ viper::vec2{ viper::GetEngine().GetRenderer().GetWidth() * 0.5f , viper::GetEngine().GetRenderer().GetHeight() * 0.5f}, 0, 2 };
-    std::unique_ptr<Player> player = std::make_unique<Player>(transform, ship_model);
-
-    player->speed = 500.0f;
-    player->rotationRate = 180.0f;
-    player->damping = 0.5f;
-	player->name = "player";
-	player->tag = "player";
-
-	scene->AddActor(std::move(player));*/
-
-    //CREATE ENEMIES
-    /*
-    std::shared_ptr<viper::Model> enemy_model = std::make_shared<viper::Model>(GameData::enemy_points, viper::vec3{ 255, 46, 46 });
-	for (int i = 0; i < 10; i++) {
-		viper::Transform enemy_transform{ viper::vec2{ viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 2 };
-		std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, enemy_model);
-		enemy->speed = viper::random::getRandomFloat() * 500;
-		enemy->damping = 1.5f;
-        //enemy->name = "enemy";
-		//enemy->tag = "enemy";
-		scene->AddActor(std::move(enemy));
-	}
-    */
-
-    // SAVING CODE FOR ENEMY CODE
-    /*for (int i = 0; i < 10; i++) {
-        viper::Transform transform{ viper::vec2{viper::random::getRandomFloat() * 1280, viper::random::getRandomFloat() * 1024}, 0, 2 };
-        std::unique_ptr<Player> player = std::make_unique<Player>(transform, model);
-        scene->AddActor(std::move(player));
-    }*/
-
-    // FONT CREATION
-    /*std::unique_ptr<viper::Font> font = std::make_unique<viper::Font>();
-    font->Load("ArcadeClassic.ttf", 20);*/
-
-    // TEXT CREATION
-    /*_text = std::make_unique<viper::Text>(font);
-    _text->Create(viper::GetEngine().GetRenderer(), "Hello World", viper::vec3{ 1, 1, 1 });*/
-
     return true;
 }
 
@@ -135,19 +71,9 @@ void SpaceGame::Update(float dt) {
         enemySpawnTimer -= dt;
         if (enemySpawnTimer <= 0) {
             enemySpawnTimer = 2;
+
             // CREATE ENEMY
-            std::shared_ptr<viper::Model> enemy_model = std::make_shared<viper::Model>(GameData::enemy_points, viper::vec3{ 1, 0.18f, 0.18f });
-            viper::Transform enemy_transform{ viper::vec2{ viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 5 };
-            std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, enemy_model);
-
-            enemy->speed = (viper::random::getReal() * 100) + 100;
-            enemy->damping = 0.2f;
-			enemy->fireTime = 3;
-			enemy->fireTimer = 5;
-            enemy->name = "enemy";
-            enemy->tag = "enemy";
-
-            scene->AddActor(std::move(enemy));
+			SpawnEnemy();
         }
         break;
 	case SpaceGame::GameState::PlayerDead:
@@ -170,16 +96,19 @@ void SpaceGame::Update(float dt) {
 
 void SpaceGame::Draw(viper::Renderer& renderer) {
 
+    // CREATE TITLE TEXT
     if (gameState == GameState::Title) {
         titleText->Create(renderer, "PIT VIPER", viper::vec3{ 1,0,0 });
         titleText->Draw(renderer, 250, 400);
     }
 
+	// CREATE GAME OVER TEXT
     if (gameState == GameState::GameOver) {
         titleText->Create(renderer, "GAME OVER", viper::vec3{ 1,0,0 });
         titleText->Draw(renderer, 250, 400);
     }
 
+	// CREATE SCORE/LIVES TEXT
     if (gameState != GameState::GameOver && gameState != GameState::Title) {
         scoreText->Create(renderer, "SCORE  "+std::to_string(score), {1,1,1});
 	    scoreText->Draw(renderer, 20.0f, 20.0f);
@@ -201,6 +130,24 @@ void SpaceGame::OnPlayerDead()
 {
 	gameState = GameState::PlayerDead;
     stateTimer = 2;
+}
+
+void SpaceGame::SpawnEnemy()
+{
+    std::shared_ptr<viper::Model> enemy_model = std::make_shared<viper::Model>(GameData::enemy_points, viper::vec3{ 1, 0.18f, 0.18f });
+
+    //viper::vec2 position = 
+    viper::Transform enemy_transform{ viper::vec2{ viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getRandomFloat() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 5 };
+    std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, enemy_model);
+
+    enemy->speed = (viper::random::getReal() * 100) + 100;
+    enemy->damping = 0.2f;
+    enemy->fireTime = 3;
+    enemy->fireTimer = 5;
+    enemy->name = "enemy";
+    enemy->tag = "enemy";
+
+    scene->AddActor(std::move(enemy));
 }
 
 void SpaceGame::Shutdown() {

@@ -1,6 +1,8 @@
 #pragma once
 #include <stdlib.h>
 #include <random>
+#include "../Math/Vector2.h"
+#include "../Math/Math.h"
 namespace viper {
 	namespace random {
 
@@ -93,5 +95,14 @@ namespace viper {
             return dist(generator());
         }
         //--------------------------------------------------------------------------------------
+
+        inline vec2 onUnitCircle() {
+            float radians = getReal(math::twoPi);
+            vec2 v;
+            v.x = math::cosf(radians);
+			v.y = math::sinf(radians);
+
+            return { math::cosf(radians), math::sinf(radians) };
+        }
 	}
 }

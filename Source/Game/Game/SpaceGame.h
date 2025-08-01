@@ -25,8 +25,9 @@ public:
 
 	void OnPlayerDead();
 
-protected:
-	//std::unique_ptr<viper::Text> text;
+private:
+	void SpawnEnemy();
+
 private:
 	GameState gameState = GameState::Initialize;
 	float enemySpawnTimer = { 0 };
