@@ -14,6 +14,7 @@
 #include <vector>
 #include "Enemy.h"
 #include "GameData.h"
+#include "Renderer/ParticleSystem.h"
 
 bool SpaceGame::Initialize() {
     scene = std::make_unique<viper::Scene>(this);
@@ -188,6 +189,8 @@ void SpaceGame::Draw(viper::Renderer& renderer) {
     }
 
     scene->Draw(renderer);
+
+	viper::GetEngine().GetParticleSystem().Draw(renderer);
 
     // DRAW TEXT
     //_text->Draw(viper::GetEngine().GetRenderer(), 40.0f, 40.0f);

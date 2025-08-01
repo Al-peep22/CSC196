@@ -17,8 +17,8 @@ namespace viper {
 		for (auto& particle : particles) {
 			if (particle.active) {
 				particle.lifespan -= dt;
-				particle.position += particle.velocity * dt;
 				particle.active = (particle.lifespan > 0);
+				particle.position += particle.velocity * dt;
 			}
 		}
 	}
@@ -32,7 +32,7 @@ namespace viper {
 		}
 	}
 
-	void ParticleSystem::AddParticle(Particle particle)
+	void ParticleSystem::AddParticle(const Particle& particle)
 	{
 		Particle* freeParticle = GetFreeParticle();
 		if (freeParticle) {
@@ -44,6 +44,7 @@ namespace viper {
 		else {
 			std::cerr << "No free particle slots available!" << std::endl;
 		}
+		particles.push_back(particle); 
 	}
 
 	Particle* ParticleSystem::GetFreeParticle()

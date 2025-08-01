@@ -5,10 +5,10 @@
 #include "Renderer.h"
 
 namespace viper {
-	class Particle {
+	struct Particle {
 	public:
 		bool active{ false };
-		float lifespan;
+		float lifespan{ 1 };
 
 		vec2 position;
 		vec2 velocity;
@@ -25,7 +25,7 @@ namespace viper {
 		void Update(float dt);
 		void Draw(class Renderer& renderer);
 
-		void AddParticle(Particle particle);
+		void AddParticle(const Particle& particle);
 	private:
 		Particle* GetFreeParticle();
 	private:

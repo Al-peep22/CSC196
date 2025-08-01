@@ -10,11 +10,19 @@
 #include "FrameWork/Scene.h"
 #include "SpaceGame.h"
 #include "Audio/AudioSystem.h"
+#include "Renderer/ParticleSystem.h"
+#include "Core/Random.h"
 
 using namespace viper;
 
 void Player::Update(float dt)
 {
+	viper::Particle particle;
+	particle.position = transform.position;
+	particle.velocity = viper::vec2{viper::random::getReal(-200.0f,200.0f),random::getReal(-200.0f,200.0f) };
+	particle.color = vec3{1,1,1};
+	particle.lifespan = 2;
+	GetEngine().GetParticleSystem().AddParticle(particle);
 
 	// ROTATION
 	float rotate = 0;
@@ -41,7 +49,8 @@ void Player::Update(float dt)
 	fireTimer -= dt;
 	if (viper::GetEngine().GetInput().GetKeyDown(SDL_SCANCODE_F) && fireTimer <= 0) {
 		fireTimer = fireTime;
-
+		
+		// PLAY ROCKET SHOOT SOUND
 		viper::GetEngine().GetAudio().PlaySound("clap");
 
 		std::shared_ptr<viper::Model> rocket_model = std::make_shared<viper::Model>(GameData::rocket_points, viper::vec3{ 1, 1, 1 });
@@ -52,6 +61,7 @@ void Player::Update(float dt)
 		rocket->lifespan = 1.5f;
 		rocket->name = "rocket";
 		rocket->tag = "player";
+
 
 		scene->AddActor(std::move(rocket));
 	}
