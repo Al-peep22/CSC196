@@ -13,17 +13,28 @@
 using namespace viper;
 void Enemy::Update(float dt)
 {
+	bool playerSeen = false;
+
 	// FOLLOW PLAYER
 	Player* player = scene->GetActorByName<Player>("player");
 	if (player) {
-		vec2 direction{0, 0};
+		vec2 direction{ 0, 0 };
 		direction = player->transform.position - transform.position;
 
 		direction = direction.Normalized();
-		viper::vec2 forward = viper::vec2{1,0}.Rotate(viper::math::degToRad(transform.rotation));
+		viper::vec2 forward = viper::vec2{ 1,0 }.Rotate(viper::math::degToRad(transform.rotation));
 
-		float angle = vec2::SignedAngleBetween(direction, forward);
-		transform.rotation = math::radToDeg(angle * dt); // Adjust rotation to face the player
+		float angle = viper::vec2::AngleBetween(forward, direction);
+		playerSeen = angle <= 30;
+
+		
+		if (playerSeen) {
+			float angle = vec2::SignedAngleBetween(direction, forward);
+			angle = viper::math::sign(angle);
+			transform.rotation = math::radToDeg(angle * 5 * dt); // Adjust rotation to face the player
+		}
+
+		
 	}
 
 	// ROTATION
@@ -37,7 +48,7 @@ void Enemy::Update(float dt)
 
 	// ENEMY ROCKETS
 	fireTimer -= dt;
-	if (fireTimer <= 0) {
+	if (fireTimer <= 0 && playerSeen) {
 		fireTimer = fireTime;
 		std::shared_ptr<viper::Model> rocket_model = std::make_shared<viper::Model>(GameData::rocket_points, viper::vec3{ 1, 0, 0 });
 		viper::Transform transform{ this->transform.position,this->transform.rotation , 2 };

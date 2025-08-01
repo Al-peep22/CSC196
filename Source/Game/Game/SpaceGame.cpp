@@ -145,7 +145,7 @@ void SpaceGame::SpawnEnemy()
         std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(enemy_transform, enemy_model);
 
         enemy->speed = (viper::random::getReal() * 100) + 100;
-        enemy->damping = 0.2f;
+        enemy->damping = 0.5f;
         enemy->fireTime = 3;
         enemy->fireTimer = 5;
         enemy->name = "enemy";

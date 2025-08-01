@@ -2,7 +2,9 @@
 #include "Engine.h"
 #include "./FrameWork/Scene.h"
 #include "Player.h"
+#include "Core/Random.h"
 #include "Input/InputSystem.h"
+#include "Renderer/ParticleSystem.h"
 using namespace viper;
 void Rocket::Update(float dt)
 {
@@ -13,6 +15,12 @@ void Rocket::Update(float dt)
 	transform.position.x = math::wrap(transform.position.x, 0.0f, (float)GetEngine().GetRenderer().GetWidth());
 	transform.position.y = math::wrap(transform.position.y, 0.0f, (float)GetEngine().GetRenderer().GetHeight());
 	
+	/*viper::ParticleSystem particle;
+	particle.position = transform.position;
+	particle.velocity = viper::random::onUnitCircle() * viper::random::getReal(10.0f, 200.0f);
+	particle.color = viper::vec3{ 1,1,1 };
+	particle.lifespan = 2;*/
+
 	Actor::Update(dt);
 }
 

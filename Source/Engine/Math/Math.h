@@ -38,6 +38,11 @@ namespace viper {
 			return min + result; // shift the result back to [min, max) range
 		}
 
+		template<typename T >
+		inline T sign(T v) {
+			return (v < 0) ? (T) - 1 : (v > 0) ? (T)1 : (T)0;
+		}
+
 		using std::min;
 		using std::max;
 		using std::sqrt;
