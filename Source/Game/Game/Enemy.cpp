@@ -6,6 +6,7 @@
 #include "Rocket.h"
 #include "GameData.h"
 #include <Math/Vector3.h>
+#include <Math/Vector2.h>
 #include "Renderer/Model.h"
 #include "Renderer/ParticleSystem.h"
 #include "Core/Random.h"
@@ -17,8 +18,12 @@ void Enemy::Update(float dt)
 	if (player) {
 		vec2 direction{0, 0};
 		direction = player->transform.position - transform.position;
+
 		direction = direction.Normalized();
-		transform.rotation = math::radToDeg(direction.Angle()); // Adjust rotation to face the player
+		viper::vec2 forward = viper::vec2{1,0}.Rotate(viper::math::degToRad(transform.rotation));
+
+		float angle = vec2::SignedAngleBetween(direction, forward);
+		transform.rotation = math::radToDeg(angle * dt); // Adjust rotation to face the player
 	}
 
 	// ROTATION

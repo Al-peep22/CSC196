@@ -46,6 +46,8 @@ namespace viper {
 		using std::sinf;
 		using std::cos;
 		using std::cosf;
+		using std::acos;
+		using std::acosf;
 
 		//using std::clamp;
 		/*template <typename T>
