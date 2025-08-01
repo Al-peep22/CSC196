@@ -61,6 +61,10 @@ int main(int argc, char* argv[]) {
     GetEngine().GetAudio().AddSound("clap.wav", "clap");
     GetEngine().GetAudio().AddSound("cowbell.wav", "cowbell");
     GetEngine().GetAudio().AddSound("close-hat.wav", "closehat");
+    GetEngine().GetAudio().AddSound("arcade-fx-288597.mp3", "death");
+    GetEngine().GetAudio().AddSound("Yoshi's Island OST - Athletic.mp3", "1music");
+    GetEngine().GetAudio().AddSound("game-music-alien-71795.mp3", "music");
+
 
     // CREATE STARS
     vector<vec2> stars;
@@ -139,6 +143,8 @@ int main(int argc, char* argv[]) {
             cout << "mouse pressed \n";
         }
         */
+
+        viper::GetEngine().GetAudio().PlaySound("music");
         
 		// CLEAR RENDERER
         vec3 color{0,0,0};

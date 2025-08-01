@@ -10,6 +10,7 @@
 //#include "Renderer/Text.h"
 #include "Engine.h"
 #include "Input/InputSystem.h"
+#include "Audio/AudioSystem.h"
 
 #include <vector>
 #include "Enemy.h"
@@ -80,11 +81,16 @@ void SpaceGame::Update(float dt) {
         stateTimer -= dt;
         if (stateTimer <= 0) {
             lives--;
-            if (lives == 0) { gameState = GameState::GameOver; stateTimer = 3; }
+            if (lives == 0) { gameState = GameState::GameOver; stateTimer = 3; playedDeathSound = false; }
             else { gameState = GameState::StartRound; }
         }
 		break;
 	case SpaceGame::GameState::GameOver:
+		// PLAY GAME OVER SOUND
+		if (!playedDeathSound) {
+			viper::GetEngine().GetAudio().PlaySound("death");
+			playedDeathSound = true;
+		}
         stateTimer -= dt;
         if (stateTimer <= 0) {
             gameState = GameState::Title;
@@ -98,8 +104,8 @@ void SpaceGame::Draw(viper::Renderer& renderer) {
 
     // CREATE TITLE TEXT
     if (gameState == GameState::Title) {
-        titleText->Create(renderer, "PIT VIPER", viper::vec3{ 1,0,0 });
-        titleText->Draw(renderer, 250, 400);
+        titleText->Create(renderer, "ALIEN MOB", viper::vec3{ 1,0,0 });
+        titleText->Draw(renderer, 200, 400);
     }
 
 	// CREATE GAME OVER TEXT
